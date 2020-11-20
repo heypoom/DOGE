@@ -5,7 +5,8 @@
   "author": "Phoomparin Mano <phoomparin@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "snowpack dev"
+    "dev": "snowpack dev",
+    "build": "snowpack dev"
   },
   "devDependencies": {
     "@snowpack/plugin-typescript": "^1",

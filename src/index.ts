@@ -55,12 +55,9 @@ world.addSystem(Collider, ['position', 'collider', 'shape'])
 
 world.loop()
 
-const screenW = window.innerWidth * 2
-const screenH = window.innerHeight * 2
-
 if (canvas) {
-  canvas.width = screenW
-  canvas.height = screenH
+  canvas.width = window.innerWidth * 2
+  canvas.height = window.innerHeight * 2
 }
 
 const game = world.get('game').data

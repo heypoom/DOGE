@@ -1,8 +1,10 @@
 import { canvas, ctx } from './canvas/context'
+import { KeyVisualizer, Renderer, Movement } from './core/systems'
+import { Collider } from './core/systems/Collider'
 
 import { World } from './core/world'
 
-const world = new World()
+export const world = new World()
 
 world.add('player', {
   position: { x: 100, y: 100 },
@@ -37,9 +39,14 @@ world.add('booster', {
   },
 })
 
-world.add('debug', {
+world.add('game', {
   keyState: {},
 })
+
+world.addSystem(Renderer, ['position', 'shape'])
+world.addSystem(KeyVisualizer, ['keyState'])
+world.addSystem(Movement, ['position', 'movement'])
+world.addSystem(Collider, ['position', 'collider', 'shape'])
 
 world.loop()
 
@@ -51,71 +58,12 @@ if (canvas) {
   canvas.height = screenH
 }
 
-function Booster() {
-  const booster = world.get('booster').data
-  const { x: cx, y: cy } = booster.position
-
-  if (!booster.collider.enabled) return
-
-  const player = world.get('player').data
-
-  const { x, y } = player.position
-
-  const isColliding =
-    x > cx - player.shape.size &&
-    y > cy - player.shape.size &&
-    x < cx + booster.shape.size &&
-    y < cy + booster.shape.size
-
-  if (isColliding) booster.collider.onCollision()
-}
-
-function gameLoop() {
-  if (!ctx) return
-
-  Booster()
-}
-
-const keymap: Record<string, () => void> = {
-  ArrowUp() {
-    const { position, movement } = world.get('player').data
-
-    if (position.y > 0) {
-      position.y -= movement.speed
-    }
-  },
-
-  ArrowDown() {
-    const { position, movement } = world.get('player').data
-
-    if (position.y < screenH - movement.speed - 50) {
-      position.y += movement.speed
-    }
-  },
-
-  ArrowLeft() {
-    const { position, movement } = world.get('player').data
-
-    if (position.x > 0) {
-      position.x -= movement.speed
-    }
-  },
-
-  ArrowRight() {
-    const { position, movement } = world.get('player').data
-
-    if (position.x < screenW - movement.speed) {
-      position.x += movement.speed
-    }
-  },
-}
-
-const debug = world.get('debug').data
+const game = world.get('game').data
 
 document.addEventListener('keydown', (e) => {
-  debug.keyState[e.key] = true
+  game.keyState[e.key] = true
 })
 
 document.addEventListener('keyup', (e) => {
-  debug.keyState[e.key] = false
+  game.keyState[e.key] = false
 })

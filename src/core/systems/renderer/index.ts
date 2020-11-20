@@ -1,8 +1,10 @@
 import { ctx, circle, square } from '../../../canvas'
 
-import type { IEntity } from '../../@types/entities'
+import type { IEntity, IEntityOf } from '../../@types/entities'
 
-export function renderer(entities: IEntity[]) {
+type RenderableEntity = IEntityOf<['position', 'shape']>
+
+export function Renderer(entities: RenderableEntity[]) {
   if (!ctx) return
 
   ctx.fillStyle = '#111'

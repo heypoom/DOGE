@@ -1,13 +1,11 @@
 import { ctx } from '../../canvas'
 
-import type { IEntity } from '../@types/entities'
+import type { IEntityOf } from '../@types/entities'
 
 const debugSize = 10
 
-export function KeyVisualizer(entities: IEntity[]) {
-  entities.forEach((entity) => {
-    const e = entity as IEntity<'debug'>
-
+export function KeyVisualizer(entities: IEntityOf<['keyState']>[]) {
+  entities.forEach((e) => {
     Object.entries(e.data.keyState).forEach(([key, state], i) => {
       if (!ctx) return
 

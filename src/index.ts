@@ -6,13 +6,13 @@ import { KeyVisualizer, Renderer, Movement } from './core/systems'
 
 export const world = new World()
 
-world.add('player', {
+world.addEntity('player', {
   position: { x: 100, y: 100 },
   movement: { speed: 10 },
   shape: { shape: 'circle', size: 40, color: '#fed330' },
 })
 
-world.add('booster', {
+world.addEntity('booster', {
   position: { x: 500, y: 800 },
   shape: { shape: 'square', size: 300, color: '#fc5c65' },
 
@@ -39,7 +39,7 @@ world.add('booster', {
   },
 })
 
-world.add('game', {
+world.addEntity('game', {
   keyState: {
     ArrowUp: false,
     ArrowDown: false,

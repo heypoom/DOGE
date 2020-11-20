@@ -23,7 +23,10 @@ export class World {
     return this.entities.find((e) => e.type === type) as IEntity<T>
   }
 
-  add<T extends IEntityType>(type: T, data: IEntityDataOf<T>): IEntity<T> {
+  addEntity<T extends IEntityType>(
+    type: T,
+    data: IEntityDataOf<T>,
+  ): IEntity<T> {
     const entity = createEntity(type, data)
     this.entities.push(entity)
 

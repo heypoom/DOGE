@@ -3,6 +3,7 @@ import { canvas } from './canvas/context'
 import { World } from './core/world'
 import { Collider } from './core/systems/Collider'
 import { KeyVisualizer, Renderer, Movement } from './core/systems'
+import { Timer } from './core/systems/Timer'
 
 export const world = new World()
 
@@ -46,12 +47,32 @@ world.addEntity('game', {
     ArrowLeft: false,
     ArrowRight: false,
   },
+
+  timer: {
+    enabled: true,
+    deltaTime: 0,
+    initialTime: Date.now(),
+  },
 })
 
 world.addSystem(Renderer, ['position', 'shape'])
 world.addSystem(KeyVisualizer, ['keyState'])
 world.addSystem(Movement, ['position', 'movement'])
 world.addSystem(Collider, ['position', 'collider', 'shape'])
+world.addSystem(Timer, ['timer'])
+
+world.addSystem((e, w) => {
+  const booster = w.get('booster').data
+  const game = w.get('game').data
+
+  const { deltaTime } = game.timer
+
+  if (deltaTime > window.innerWidth * 2) return
+  if (deltaTime > window.innerHeight * 2) return
+
+  booster.position.x = deltaTime
+  booster.position.y = deltaTime / 2
+}, [])
 
 world.loop()
 

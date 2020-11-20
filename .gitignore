@@ -388,3 +388,6 @@ dmypy.json
 .prof
 
 # End of https://www.toptal.com/developers/gitignore/api/node,macos,code,python,jetbrains
+
+# Local Netlify folder
+.netlify

@@ -9,7 +9,7 @@ export const world = new World()
 world.add('player', {
   position: { x: 100, y: 100 },
   movement: { speed: 10 },
-  shape: { shape: 'square', size: 40, color: '#fed330' },
+  shape: { shape: 'circle', size: 40, color: '#fed330' },
 })
 
 world.add('booster', {

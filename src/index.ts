@@ -26,6 +26,9 @@ const state = {
 function square(x: number, y: number, size: number, color: string) {
   if (!ctx) return
 
+  ctx.shadowBlur = 50
+  ctx.shadowColor = color
+
   ctx.fillStyle = color
   ctx.fillRect(x, y, size, size)
 }
@@ -70,8 +73,16 @@ function gameLoop() {
     }
   })
 
-  SquareCollider(500, 800, 300, '#fc5c65', '#ff8c6f', (isColliding) => {
-    state.playerColor = isColliding ? '#ff8c6f' : '#fed330'
+  SquareCollider(500, 800, 300, '#fc5c65', '#2bcbba', (isColliding) => {
+    if (isColliding) {
+      state.moveSpeed = 100
+      state.playerColor = '#2bcbba'
+
+      setTimeout(() => {
+        state.moveSpeed = 10
+        state.playerColor = '#fed330'
+      }, 2000)
+    }
   })
 
   square(state.x, state.y, state.playerSize, state.playerColor)

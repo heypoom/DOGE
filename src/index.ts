@@ -1,131 +1,161 @@
-import { createEntity } from './core/world/createEntity'
+import { World } from './core/world'
 
-const entity = createEntity('player', { position: { x: 100, y: 100 } })
+const world = new World()
 
-// const canvas = document.querySelector('canvas')
-// const ctx = canvas?.getContext('2d')
+const entity = world.add('player', {
+  position: { x: 100, y: 100 },
+  movement: { speed: 10 },
+  shape: { shape: 'square', size: 40, color: '#fed330' },
+})
 
-// const [sw, sh] = [window.innerWidth * 2, window.innerHeight * 2]
+const canvas = document.querySelector('canvas')
+const ctx = canvas?.getContext('2d')
 
-// if (canvas) {
-//   canvas.width = sw
-//   canvas.height = sh
-// }
+const [sw, sh] = [window.innerWidth * 2, window.innerHeight * 2]
 
-// const keystate: Record<string, boolean> = {
-//   ArrowUp: false,
-//   ArrowDown: false,
-//   ArrowLeft: false,
-//   ArrowRight: false,
-// }
+if (canvas) {
+  canvas.width = sw
+  canvas.height = sh
+}
 
-// const state = {
-//   x: 100,
-//   y: 100,
-//   playerSize: 40,
-//   playerColor: '#fed330',
-//   moveSpeed: 10,
-// }
+const keystate: Record<string, boolean> = {
+  ArrowUp: false,
+  ArrowDown: false,
+  ArrowLeft: false,
+  ArrowRight: false,
+}
 
-// function square(x: number, y: number, size: number, color: string) {
-//   if (!ctx) return
+function square(x: number, y: number, size: number, color: string) {
+  if (!ctx) return
 
-//   ctx.shadowBlur = 50
-//   ctx.shadowColor = color
+  ctx.shadowBlur = 50
+  ctx.shadowColor = color
 
-//   ctx.fillStyle = color
-//   ctx.fillRect(x, y, size, size)
-// }
+  ctx.fillStyle = color
+  ctx.fillRect(x, y, size, size)
+}
 
-// function circle(x: number, y: number, size: number, color: string) {
-//   if (!ctx) return
+function circle(x: number, y: number, size: number, color: string) {
+  if (!ctx) return
 
-//   ctx.beginPath()
-//   ctx.arc(x, y, size, 0, Math.PI * 2, true)
+  ctx.beginPath()
+  ctx.arc(x, y, size, 0, Math.PI * 2, true)
 
-//   ctx.shadowBlur = 50
-//   ctx.shadowColor = color
+  ctx.shadowBlur = 50
+  ctx.shadowColor = color
 
-//   ctx.fillStyle = color
-//   ctx.fill()
-// }
+  ctx.fillStyle = color
+  ctx.fill()
+}
 
-// function SquareCollider(
-//   cx: number,
-//   cy: number,
-//   size: number,
-//   color: string,
-//   toColor: string,
-//   cb: (isColliding: boolean) => void,
-// ) {
-//   const { x, y } = state
+function SquareCollider(
+  cx: number,
+  cy: number,
+  size: number,
+  color: string,
+  toColor: string,
+  cb: (isColliding: boolean) => void,
+) {
+  const player = world.get('player').data
 
-//   const isColliding =
-//     x > cx - state.playerSize &&
-//     y > cy - state.playerSize &&
-//     x < cx + size &&
-//     y < cy + size
+  const { x, y } = player.position
 
-//   square(cx, cy, size, isColliding ? toColor : color)
+  const isColliding =
+    x > cx - player.shape.size &&
+    y > cy - player.shape.size &&
+    x < cx + size &&
+    y < cy + size
 
-//   if (cb) cb(isColliding)
-// }
+  square(cx, cy, size, isColliding ? toColor : color)
 
-// function gameLoop() {
-//   if (!ctx) return
+  if (cb) cb(isColliding)
+}
 
-//   ctx.fillStyle = '#111'
-//   ctx.fillRect(0, 0, sw, sh)
+function gameLoop() {
+  if (!ctx) return
 
-//   Object.entries(keystate).map(([key, state], i) => {
-//     const debugSize = 10
+  const player = world.get('player').data
 
-//     // Debug Squares
-//     ctx.fillStyle = state ? '#26de81' : '#eb3b5a'
-//     ctx.fillRect(i * debugSize, 0, debugSize, debugSize)
+  ctx.fillStyle = '#111'
+  ctx.fillRect(0, 0, sw, sh)
 
-//     if (state) {
-//       const handle = keymap[key]
-//       if (handle) handle()
-//     }
-//   })
+  Object.entries(keystate).map(([key, state], i) => {
+    const debugSize = 10
 
-//   SquareCollider(500, 800, 300, '#fc5c65', '#2bcbba', (isColliding) => {
-//     if (isColliding) {
-//       state.moveSpeed = 100
-//       state.playerColor = '#2bcbba'
+    // Debug Squares
+    ctx.fillStyle = state ? '#26de81' : '#eb3b5a'
+    ctx.fillRect(i * debugSize, 0, debugSize, debugSize)
 
-//       setTimeout(() => {
-//         state.moveSpeed = 10
-//         state.playerColor = '#fed330'
-//       }, 2000)
-//     }
-//   })
+    if (state) {
+      const handle = keymap[key]
+      if (handle) handle()
+    }
+  })
 
-//   // Render player
-//   circle(state.x, state.y, state.playerSize, state.playerColor)
+  SquareCollider(500, 800, 300, '#fc5c65', '#2bcbba', (isColliding) => {
+    if (isColliding) {
+      const { movement, shape } = world.get('player').data
+      movement.speed = 100
+      shape.color = '#2bcbba'
 
-//   requestAnimationFrame(gameLoop)
-// }
+      setTimeout(() => {
+        movement.speed = 10
+        shape.color = '#fed330'
+      }, 2000)
+    }
+  })
 
-// const keymap: Record<string, () => void> = {
-//   ArrowUp: () => state.y > 0 && (state.y -= state.moveSpeed),
+  // Render player
+  circle(
+    player.position.x,
+    player.position.y,
+    player.shape.size,
+    player.shape.color,
+  )
 
-//   ArrowDown: () =>
-//     state.y < sh - state.moveSpeed - 50 && (state.y += state.moveSpeed),
+  requestAnimationFrame(gameLoop)
+}
 
-//   ArrowLeft: () => state.x > 0 && (state.x -= state.moveSpeed),
+const keymap: Record<string, () => void> = {
+  ArrowUp() {
+    const { position, movement } = world.get('player').data
 
-//   ArrowRight: () =>
-//     state.x < sw - state.moveSpeed && (state.x += state.moveSpeed),
-// }
+    if (position.y > 0) {
+      position.y -= movement.speed
+    }
+  },
 
-// document.addEventListener('keydown', (e) => {
-//   keystate[e.key] = true
-// })
+  ArrowDown() {
+    const { position, movement } = world.get('player').data
 
-// document.addEventListener('keyup', (e) => {
-//   keystate[e.key] = false
-// })
+    if (position.y < sh - movement.speed - 50) {
+      position.y += movement.speed
+    }
+  },
 
-// gameLoop()
+  ArrowLeft() {
+    const { position, movement } = world.get('player').data
+
+    if (position.x > 0) {
+      position.x -= movement.speed
+    }
+  },
+
+  ArrowRight() {
+    const { position, movement } = world.get('player').data
+
+    if (position.x < sw - movement.speed) {
+      position.x += movement.speed
+    }
+  },
+}
+
+document.addEventListener('keydown', (e) => {
+  keystate[e.key] = true
+})
+
+document.addEventListener('keyup', (e) => {
+  keystate[e.key] = false
+})
+
+gameLoop()

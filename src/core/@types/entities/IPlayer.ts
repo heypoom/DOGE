@@ -1,3 +1,4 @@
-import type { PickComponents, IComponentType } from '../components'
+import { Schema } from '../../utils/schema'
 
-export type IPlayer = PickComponents<['position']>
+const schema = Schema('position', 'movement', 'shape')
+export type IPlayer = typeof schema

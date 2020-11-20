@@ -1,113 +1,131 @@
-const canvas = document.querySelector('canvas')
-const ctx = canvas?.getContext('2d')
+import { createEntity } from './core/world/createEntity'
 
-const [sw, sh] = [window.innerWidth * 2, window.innerHeight * 2]
+const entity = createEntity('player', { position: { x: 100, y: 100 } })
 
-if (canvas) {
-  canvas.width = sw
-  canvas.height = sh
-}
+// const canvas = document.querySelector('canvas')
+// const ctx = canvas?.getContext('2d')
 
-const keystate: Record<string, boolean> = {
-  ArrowUp: false,
-  ArrowDown: false,
-  ArrowLeft: false,
-  ArrowRight: false,
-}
+// const [sw, sh] = [window.innerWidth * 2, window.innerHeight * 2]
 
-const state = {
-  x: 100,
-  y: 100,
-  playerSize: 100,
-  playerColor: '#fed330',
-  moveSpeed: 10,
-}
+// if (canvas) {
+//   canvas.width = sw
+//   canvas.height = sh
+// }
 
-function square(x: number, y: number, size: number, color: string) {
-  if (!ctx) return
+// const keystate: Record<string, boolean> = {
+//   ArrowUp: false,
+//   ArrowDown: false,
+//   ArrowLeft: false,
+//   ArrowRight: false,
+// }
 
-  ctx.shadowBlur = 50
-  ctx.shadowColor = color
+// const state = {
+//   x: 100,
+//   y: 100,
+//   playerSize: 40,
+//   playerColor: '#fed330',
+//   moveSpeed: 10,
+// }
 
-  ctx.fillStyle = color
-  ctx.fillRect(x, y, size, size)
-}
+// function square(x: number, y: number, size: number, color: string) {
+//   if (!ctx) return
 
-function SquareCollider(
-  cx: number,
-  cy: number,
-  size: number,
-  color: string,
-  toColor: string,
-  cb: (isColliding: boolean) => void,
-) {
-  const { x, y } = state
+//   ctx.shadowBlur = 50
+//   ctx.shadowColor = color
 
-  const isColliding =
-    x > cx - state.playerSize &&
-    y > cy - state.playerSize &&
-    x < cx + size &&
-    y < cy + size
+//   ctx.fillStyle = color
+//   ctx.fillRect(x, y, size, size)
+// }
 
-  square(cx, cy, size, isColliding ? toColor : color)
+// function circle(x: number, y: number, size: number, color: string) {
+//   if (!ctx) return
 
-  if (cb) cb(isColliding)
-}
+//   ctx.beginPath()
+//   ctx.arc(x, y, size, 0, Math.PI * 2, true)
 
-function gameLoop() {
-  if (!ctx) return
+//   ctx.shadowBlur = 50
+//   ctx.shadowColor = color
 
-  ctx.fillStyle = '#111'
-  ctx.fillRect(0, 0, sw, sh)
+//   ctx.fillStyle = color
+//   ctx.fill()
+// }
 
-  Object.entries(keystate).map(([key, state], i) => {
-    const debugSize = 10
+// function SquareCollider(
+//   cx: number,
+//   cy: number,
+//   size: number,
+//   color: string,
+//   toColor: string,
+//   cb: (isColliding: boolean) => void,
+// ) {
+//   const { x, y } = state
 
-    // Debug Squares
-    ctx.fillStyle = state ? '#26de81' : '#eb3b5a'
-    ctx.fillRect(i * debugSize, 0, debugSize, debugSize)
+//   const isColliding =
+//     x > cx - state.playerSize &&
+//     y > cy - state.playerSize &&
+//     x < cx + size &&
+//     y < cy + size
 
-    if (state) {
-      const handle = keymap[key]
-      if (handle) handle()
-    }
-  })
+//   square(cx, cy, size, isColliding ? toColor : color)
 
-  SquareCollider(500, 800, 300, '#fc5c65', '#2bcbba', (isColliding) => {
-    if (isColliding) {
-      state.moveSpeed = 100
-      state.playerColor = '#2bcbba'
+//   if (cb) cb(isColliding)
+// }
 
-      setTimeout(() => {
-        state.moveSpeed = 10
-        state.playerColor = '#fed330'
-      }, 2000)
-    }
-  })
+// function gameLoop() {
+//   if (!ctx) return
 
-  square(state.x, state.y, state.playerSize, state.playerColor)
+//   ctx.fillStyle = '#111'
+//   ctx.fillRect(0, 0, sw, sh)
 
-  requestAnimationFrame(gameLoop)
-}
+//   Object.entries(keystate).map(([key, state], i) => {
+//     const debugSize = 10
 
-const keymap: Record<string, () => void> = {
-  ArrowUp: () => state.y > 0 && (state.y -= state.moveSpeed),
+//     // Debug Squares
+//     ctx.fillStyle = state ? '#26de81' : '#eb3b5a'
+//     ctx.fillRect(i * debugSize, 0, debugSize, debugSize)
 
-  ArrowDown: () =>
-    state.y < sh - state.moveSpeed - 50 && (state.y += state.moveSpeed),
+//     if (state) {
+//       const handle = keymap[key]
+//       if (handle) handle()
+//     }
+//   })
 
-  ArrowLeft: () => state.x > 0 && (state.x -= state.moveSpeed),
+//   SquareCollider(500, 800, 300, '#fc5c65', '#2bcbba', (isColliding) => {
+//     if (isColliding) {
+//       state.moveSpeed = 100
+//       state.playerColor = '#2bcbba'
 
-  ArrowRight: () =>
-    state.x < sw - state.moveSpeed && (state.x += state.moveSpeed),
-}
+//       setTimeout(() => {
+//         state.moveSpeed = 10
+//         state.playerColor = '#fed330'
+//       }, 2000)
+//     }
+//   })
 
-document.addEventListener('keydown', (e) => {
-  keystate[e.key] = true
-})
+//   // Render player
+//   circle(state.x, state.y, state.playerSize, state.playerColor)
 
-document.addEventListener('keyup', (e) => {
-  keystate[e.key] = false
-})
+//   requestAnimationFrame(gameLoop)
+// }
 
-gameLoop()
+// const keymap: Record<string, () => void> = {
+//   ArrowUp: () => state.y > 0 && (state.y -= state.moveSpeed),
+
+//   ArrowDown: () =>
+//     state.y < sh - state.moveSpeed - 50 && (state.y += state.moveSpeed),
+
+//   ArrowLeft: () => state.x > 0 && (state.x -= state.moveSpeed),
+
+//   ArrowRight: () =>
+//     state.x < sw - state.moveSpeed && (state.x += state.moveSpeed),
+// }
+
+// document.addEventListener('keydown', (e) => {
+//   keystate[e.key] = true
+// })
+
+// document.addEventListener('keyup', (e) => {
+//   keystate[e.key] = false
+// })
+
+// gameLoop()

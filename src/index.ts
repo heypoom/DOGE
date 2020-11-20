@@ -2,10 +2,37 @@ import { World } from './core/world'
 
 const world = new World()
 
-const entity = world.add('player', {
+world.add('player', {
   position: { x: 100, y: 100 },
   movement: { speed: 10 },
   shape: { shape: 'square', size: 40, color: '#fed330' },
+})
+
+world.add('booster', {
+  position: { x: 500, y: 800 },
+  shape: { shape: 'square', size: 300, color: '#fc5c65' },
+
+  collider: {
+    enabled: true,
+    role: 'target',
+
+    onCollision() {
+      const booster = world.get('booster').data
+      const player = world.get('player').data
+
+      booster.shape.color = '#2bcbba'
+
+      player.movement.speed = 100
+      player.shape.color = '#2bcbba'
+
+      setTimeout(() => {
+        booster.shape.color = '#eb3b5a'
+
+        player.movement.speed = 10
+        player.shape.color = '#fed330'
+      }, 2000)
+    },
+  },
 })
 
 const canvas = document.querySelector('canvas')
@@ -48,14 +75,14 @@ function circle(x: number, y: number, size: number, color: string) {
   ctx.fill()
 }
 
-function SquareCollider(
-  cx: number,
-  cy: number,
-  size: number,
-  color: string,
-  toColor: string,
-  cb: (isColliding: boolean) => void,
-) {
+function Booster() {
+  const booster = world.get('booster').data
+  const { x: cx, y: cy } = booster.position
+
+  square(cx, cy, booster.shape.size, booster.shape.color)
+
+  if (!booster.collider.enabled) return
+
   const player = world.get('player').data
 
   const { x, y } = player.position
@@ -63,12 +90,10 @@ function SquareCollider(
   const isColliding =
     x > cx - player.shape.size &&
     y > cy - player.shape.size &&
-    x < cx + size &&
-    y < cy + size
+    x < cx + booster.shape.size &&
+    y < cy + booster.shape.size
 
-  square(cx, cy, size, isColliding ? toColor : color)
-
-  if (cb) cb(isColliding)
+  if (isColliding) booster.collider.onCollision()
 }
 
 function gameLoop() {
@@ -92,18 +117,7 @@ function gameLoop() {
     }
   })
 
-  SquareCollider(500, 800, 300, '#fc5c65', '#2bcbba', (isColliding) => {
-    if (isColliding) {
-      const { movement, shape } = world.get('player').data
-      movement.speed = 100
-      shape.color = '#2bcbba'
-
-      setTimeout(() => {
-        movement.speed = 10
-        shape.color = '#fed330'
-      }, 2000)
-    }
-  })
+  Booster()
 
   // Render player
   circle(

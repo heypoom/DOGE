@@ -1,6 +1,8 @@
 import type { IEntity, IEntityDataOf, IEntityType } from '../@types/entities'
 import { createEntity } from './createEntity'
 
+import { run } from '../systems'
+
 export class World {
   entities: IEntity[] = []
 
@@ -17,5 +19,15 @@ export class World {
     this.entities.push(entity)
 
     return entity
+  }
+
+  tick() {
+    run(this.entities)
+  }
+
+  loop = () => {
+    this.tick()
+
+    requestAnimationFrame(this.loop)
   }
 }

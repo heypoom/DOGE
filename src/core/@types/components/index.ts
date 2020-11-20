@@ -8,6 +8,7 @@ export interface IComponentMap {
   movement: IMovement
   shape: IShape
   collider: ICollider
+  keyState: Record<string, boolean>
 }
 
 export type IComponentType = keyof IComponentMap

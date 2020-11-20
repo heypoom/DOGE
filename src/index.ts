@@ -1,3 +1,5 @@
+import { canvas, ctx } from './canvas/context'
+
 import { World } from './core/world'
 
 const world = new World()
@@ -35,51 +37,23 @@ world.add('booster', {
   },
 })
 
-const canvas = document.querySelector('canvas')
-const ctx = canvas?.getContext('2d')
+world.add('debug', {
+  keyState: {},
+})
 
-const [sw, sh] = [window.innerWidth * 2, window.innerHeight * 2]
+world.loop()
+
+const screenW = window.innerWidth * 2
+const screenH = window.innerHeight * 2
 
 if (canvas) {
-  canvas.width = sw
-  canvas.height = sh
-}
-
-const keystate: Record<string, boolean> = {
-  ArrowUp: false,
-  ArrowDown: false,
-  ArrowLeft: false,
-  ArrowRight: false,
-}
-
-function square(x: number, y: number, size: number, color: string) {
-  if (!ctx) return
-
-  ctx.shadowBlur = 50
-  ctx.shadowColor = color
-
-  ctx.fillStyle = color
-  ctx.fillRect(x, y, size, size)
-}
-
-function circle(x: number, y: number, size: number, color: string) {
-  if (!ctx) return
-
-  ctx.beginPath()
-  ctx.arc(x, y, size, 0, Math.PI * 2, true)
-
-  ctx.shadowBlur = 50
-  ctx.shadowColor = color
-
-  ctx.fillStyle = color
-  ctx.fill()
+  canvas.width = screenW
+  canvas.height = screenH
 }
 
 function Booster() {
   const booster = world.get('booster').data
   const { x: cx, y: cy } = booster.position
-
-  square(cx, cy, booster.shape.size, booster.shape.color)
 
   if (!booster.collider.enabled) return
 
@@ -99,35 +73,7 @@ function Booster() {
 function gameLoop() {
   if (!ctx) return
 
-  const player = world.get('player').data
-
-  ctx.fillStyle = '#111'
-  ctx.fillRect(0, 0, sw, sh)
-
-  Object.entries(keystate).map(([key, state], i) => {
-    const debugSize = 10
-
-    // Debug Squares
-    ctx.fillStyle = state ? '#26de81' : '#eb3b5a'
-    ctx.fillRect(i * debugSize, 0, debugSize, debugSize)
-
-    if (state) {
-      const handle = keymap[key]
-      if (handle) handle()
-    }
-  })
-
   Booster()
-
-  // Render player
-  circle(
-    player.position.x,
-    player.position.y,
-    player.shape.size,
-    player.shape.color,
-  )
-
-  requestAnimationFrame(gameLoop)
 }
 
 const keymap: Record<string, () => void> = {
@@ -142,7 +88,7 @@ const keymap: Record<string, () => void> = {
   ArrowDown() {
     const { position, movement } = world.get('player').data
 
-    if (position.y < sh - movement.speed - 50) {
+    if (position.y < screenH - movement.speed - 50) {
       position.y += movement.speed
     }
   },
@@ -158,18 +104,18 @@ const keymap: Record<string, () => void> = {
   ArrowRight() {
     const { position, movement } = world.get('player').data
 
-    if (position.x < sw - movement.speed) {
+    if (position.x < screenW - movement.speed) {
       position.x += movement.speed
     }
   },
 }
 
+const debug = world.get('debug').data
+
 document.addEventListener('keydown', (e) => {
-  keystate[e.key] = true
+  debug.keyState[e.key] = true
 })
 
 document.addEventListener('keyup', (e) => {
-  keystate[e.key] = false
+  debug.keyState[e.key] = false
 })
-
-gameLoop()

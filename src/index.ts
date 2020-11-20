@@ -1,8 +1,8 @@
-import { canvas, ctx } from './canvas/context'
-import { KeyVisualizer, Renderer, Movement } from './core/systems'
-import { Collider } from './core/systems/Collider'
+import { canvas } from './canvas/context'
 
 import { World } from './core/world'
+import { Collider } from './core/systems/Collider'
+import { KeyVisualizer, Renderer, Movement } from './core/systems'
 
 export const world = new World()
 
@@ -40,7 +40,12 @@ world.add('booster', {
 })
 
 world.add('game', {
-  keyState: {},
+  keyState: {
+    ArrowUp: false,
+    ArrowDown: false,
+    ArrowLeft: false,
+    ArrowRight: false,
+  },
 })
 
 world.addSystem(Renderer, ['position', 'shape'])

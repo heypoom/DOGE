@@ -8,8 +8,6 @@ if (canvas) {
   canvas.height = sh
 }
 
-let size = 100
-
 const keystate: Record<string, boolean> = {
   ArrowUp: false,
   ArrowDown: false,
@@ -20,6 +18,7 @@ const keystate: Record<string, boolean> = {
 const state = {
   x: 100,
   y: 100,
+  playerSize: 100,
   playerColor: '#fed330',
   moveSpeed: 10,
 }
@@ -37,15 +36,19 @@ function SquareCollider(
   size: number,
   color: string,
   toColor: string,
-  cb: () => void,
+  cb: (isColliding: boolean) => void,
 ) {
   const { x, y } = state
 
-  const isColliding = x > cx && x < cx + size && y > cy && y < cy + size
+  const isColliding =
+    x > cx - state.playerSize &&
+    y > cy - state.playerSize &&
+    x < cx + size &&
+    y < cy + size
 
   square(cx, cy, size, isColliding ? toColor : color)
 
-  if (isColliding && cb) cb()
+  if (cb) cb(isColliding)
 }
 
 function gameLoop() {
@@ -67,11 +70,11 @@ function gameLoop() {
     }
   })
 
-  SquareCollider(500, 800, 300, '#fc5c65', '#ff8c6f', () => {
-    state.playerColor = '#ff8c6f'
+  SquareCollider(500, 800, 300, '#fc5c65', '#ff8c6f', (isColliding) => {
+    state.playerColor = isColliding ? '#ff8c6f' : '#fed330'
   })
 
-  square(state.x, state.y, size, state.playerColor)
+  square(state.x, state.y, state.playerSize, state.playerColor)
 
   requestAnimationFrame(gameLoop)
 }

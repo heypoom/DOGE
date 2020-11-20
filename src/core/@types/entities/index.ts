@@ -1,8 +1,10 @@
-import type { IComponentType, PickComponents } from '../components'
 import type { IBooster } from './IBooster'
-import type { IEntity } from './IEntity'
 import type { IGame } from './IGame'
 import type { IPlayer } from './IPlayer'
+
+import type { IEntity } from '../IEntity'
+
+import type { IComponentType, PickComponents } from '../components'
 
 export interface IEntityMap {
   player: IPlayer
@@ -19,4 +21,4 @@ export type IEntityOf<T extends IComponentType[] = IComponentType[]> = IEntity<
 
 export type IEntityDataOf<T extends keyof IEntityMap> = IEntityMap[T]
 
-export type { IEntity } from './IEntity'
+export { IEntity } from '../IEntity'

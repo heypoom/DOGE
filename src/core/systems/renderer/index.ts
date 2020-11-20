@@ -1,6 +1,6 @@
 import { ctx, circle, square } from '../../../canvas'
 
-import type { IEntity, IEntityOf } from '../../@types/entities'
+import type { IEntityOf } from '../../@types/entities'
 
 type RenderableEntity = IEntityOf<['position', 'shape']>
 

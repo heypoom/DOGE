@@ -11,27 +11,37 @@ world.addEntity('player', {
   position: { x: 100, y: 100 },
   movement: { speed: 10 },
   shape: { shape: 'circle', size: 40, color: '#fed330' },
+
+  collider: {
+    enabled: true,
+    role: 'target',
+    isColliding: false,
+    collidingAt: {},
+    onCollision: () => {},
+  },
 })
 
-world.addEntity('booster', {
+world.addEntity('wall', {
   position: { x: 500, y: 800 },
   shape: { shape: 'square', size: 300, color: '#fc5c65' },
 
   collider: {
     enabled: true,
     role: 'target',
+    isColliding: false,
+    collidingAt: {},
 
     onCollision() {
-      const booster = world.get('booster').data
+      const wall = world.get('wall').data
       const player = world.get('player').data
 
-      booster.shape.color = '#2bcbba'
+      wall.shape.color = '#2bcbba'
 
       player.movement.speed = 100
       player.shape.color = '#2bcbba'
 
       setTimeout(() => {
-        booster.shape.color = '#eb3b5a'
+        wall.shape.color = '#eb3b5a'
 
         player.movement.speed = 10
         player.shape.color = '#fed330'
@@ -57,12 +67,12 @@ world.addEntity('game', {
 
 world.addSystem(Renderer, ['position', 'shape'])
 world.addSystem(KeyVisualizer, ['keyState'])
-world.addSystem(Movement, ['position', 'movement'])
+world.addSystem(Movement, ['position', 'movement', 'collider'])
 world.addSystem(Collider, ['position', 'collider', 'shape'])
 world.addSystem(Timer, ['timer'])
 
 world.addSystem((e, w) => {
-  const booster = w.get('booster').data
+  const wall = w.get('wall').data
   const game = w.get('game').data
 
   const { deltaTime } = game.timer
@@ -70,8 +80,8 @@ world.addSystem((e, w) => {
   if (deltaTime > window.innerWidth * 2) return
   if (deltaTime > window.innerHeight * 2) return
 
-  booster.position.x = deltaTime
-  booster.position.y = deltaTime / 2
+  wall.position.x = deltaTime
+  wall.position.y = deltaTime / 2
 }, [])
 
 world.loop()

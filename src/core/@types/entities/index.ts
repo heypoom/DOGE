@@ -1,4 +1,4 @@
-import type { IBooster } from './IBooster'
+import type { IWall } from './IWall'
 import type { IGame } from './IGame'
 import type { IPlayer } from './IPlayer'
 
@@ -8,7 +8,7 @@ import type { IComponentType, PickComponents } from '../components'
 
 export interface IEntityMap {
   player: IPlayer
-  booster: IBooster
+  wall: IWall
   game: IGame
 }
 

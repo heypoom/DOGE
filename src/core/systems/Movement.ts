@@ -1,14 +1,14 @@
 import type { IEntityOf } from '../@types/entities'
 import type { World } from '../world'
 
-type IMovableEntity = IEntityOf<['position', 'movement']>
+type IMovableEntity = IEntityOf<['position', 'movement', 'collider']>
 
 const screenW = window.innerWidth * 2
 const screenH = window.innerHeight * 2
 
 const keymap: Record<string, (e: IMovableEntity) => void> = {
   ArrowUp(e) {
-    const { position, movement } = e.data
+    const { position, movement, collider } = e.data
 
     if (position.y > 0) {
       position.y -= movement.speed
@@ -16,7 +16,7 @@ const keymap: Record<string, (e: IMovableEntity) => void> = {
   },
 
   ArrowDown(e) {
-    const { position, movement } = e.data
+    const { position, movement, collider } = e.data
 
     if (position.y < screenH - movement.speed - 50) {
       position.y += movement.speed
@@ -24,7 +24,7 @@ const keymap: Record<string, (e: IMovableEntity) => void> = {
   },
 
   ArrowLeft(e) {
-    const { position, movement } = e.data
+    const { position, movement, collider } = e.data
 
     if (position.x > 0) {
       position.x -= movement.speed
@@ -32,7 +32,7 @@ const keymap: Record<string, (e: IMovableEntity) => void> = {
   },
 
   ArrowRight(e) {
-    const { position, movement } = e.data
+    const { position, movement, collider } = e.data
 
     if (position.x < screenW - movement.speed) {
       position.x += movement.speed

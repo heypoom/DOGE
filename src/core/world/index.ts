@@ -11,9 +11,27 @@ import type {
 
 import type { IComponentType } from '../@types/components'
 
+type ISystemHandler<T extends IComponentType[]> = (
+  entities: IEntityOf<T>[],
+  world: World,
+) => void
+
 export class World {
   entities: IEntity[] = []
   systems: ISystem[] = []
+
+  setup() {
+    const systems = this.systems.filter((s) => s.runOn === 'setup')
+    console.log(`[Setup] Found ${systems.length} startup system.`)
+
+    this.run(systems, this.entities)
+  }
+
+  tick() {
+    const systems = this.systems.filter((s) => s.runOn === 'tick')
+
+    this.run(systems, this.entities)
+  }
 
   list<T extends IEntityType>(type: T): IEntity<T>[] {
     return this.entities.filter((e) => e.type === type) as IEntity<T>[]
@@ -34,17 +52,29 @@ export class World {
   }
 
   addSystem<T extends IComponentType[]>(
-    process: (entities: IEntityOf<T>[], world: World) => void,
+    process: ISystemHandler<T>,
     deps: T,
+    options?: Partial<Pick<ISystem, 'runOn'>>,
   ) {
-    const system: ISystem<T> = { deps, process }
+    const system: ISystem<T> = {
+      deps,
+      process,
+      runOn: options?.runOn ?? 'tick',
+    }
 
     this.systems.push(system)
   }
 
-  tick() {
-    this.systems.forEach((system) => {
-      const filtered = this.entities.filter((e) => {
+  addSetupSystem<T extends IComponentType[]>(
+    process: ISystemHandler<T>,
+    deps: T,
+  ) {
+    this.addSystem(process, deps, { runOn: 'setup' })
+  }
+
+  run(systems: ISystem[], entities: IEntity[]) {
+    systems.forEach((system) => {
+      const filtered = entities.filter((e) => {
         const keys = Object.keys(e.data)
 
         return system.deps.every((dep) => keys.includes(dep))
@@ -58,5 +88,11 @@ export class World {
     this.tick()
 
     requestAnimationFrame(this.loop)
+  }
+
+  start() {
+    this.setup()
+
+    this.loop()
   }
 }

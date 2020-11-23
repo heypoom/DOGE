@@ -1,5 +1,5 @@
 import { Schema } from '../index'
 
-const schema = Schema('position', 'movement', 'shape', 'collider')
+const schema = Schema('position', 'movement', 'texture', 'collider')
 
 export type IPlayer = typeof schema

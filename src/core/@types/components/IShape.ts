@@ -1,5 +1,5 @@
 export interface IShape {
-  shape: 'square' | 'circle'
+  type: 'square' | 'circle'
   size: number
   color: string
 }

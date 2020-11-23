@@ -4,7 +4,7 @@ import type { IEntityOf } from '../@types/entities'
 
 import { ctx } from '../../canvas'
 
-type ICollidable = IEntityOf<['position', 'collider', 'shape']>
+type ICollidable = IEntityOf<['position', 'collider']>
 
 export function Collider(entities: ICollidable[], world: World) {
   entities.forEach((e) => {
@@ -19,10 +19,10 @@ export function Collider(entities: ICollidable[], world: World) {
     const { x, y } = player.position
     const { x: cx, y: cy } = target.position
 
-    const isLeft = x < cx + target.shape.size
-    const isRight = x > cx - player.shape.size
-    const isTop = y > cy - player.shape.size
-    const isBottom = y < cy + target.shape.size
+    const isLeft = x < cx + target.collider.size
+    const isRight = x > cx - player.collider.size
+    const isTop = y > cy - player.collider.size
+    const isBottom = y < cy + target.collider.size
 
     target.collider.collidingAt = {
       left: isLeft,

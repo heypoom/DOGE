@@ -4,6 +4,7 @@ import type { IComponentType } from './components'
 import type { World } from '../world'
 
 export interface ISystem<T extends IComponentType[] = IComponentType[]> {
-  process: (entities: IEntityOf<T>[], world: World) => void
+  runOn?: 'setup' | 'tick'
   deps: T
+  process: (entities: IEntityOf<T>[], world: World) => void
 }

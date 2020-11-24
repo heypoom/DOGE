@@ -6,7 +6,6 @@ import {
   KeyVisualizerSystem,
   MovementSystem,
   ColliderSystem,
-  KeyVisualizerSystem,
 } from './core/systems'
 
 import { pixi } from './gfx/pixi'

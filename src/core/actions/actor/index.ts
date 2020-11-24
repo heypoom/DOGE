@@ -1,4 +1,4 @@
-import { MoveAction } from '../move'
+import { MoveAction } from './movement'
 
 import type { IActionGroup } from '../../@types/IActionGroup'
 import type { IActorAction } from '../@types/IActorAction'

@@ -9,6 +9,7 @@ import {
 } from './core/systems'
 
 import { pixi } from './gfx/pixi'
+import { action } from './core/actions/createAction'
 
 export const world = new World()
 window.world = world
@@ -26,7 +27,7 @@ world.addEntity('player', {
   collider: {
     enabled: true,
     role: 'target',
-    size: 90,
+    size: 60,
   },
 })
 
@@ -39,7 +40,7 @@ world.addEntity('wall', {
     role: 'target',
     size: 150,
 
-    // onCollision: action('@wall/speedboost'),
+    onCollision: action('@wall/speedboost'),
   },
 })
 

@@ -20,7 +20,6 @@ world.addEntity('player', {
     width: 60,
     height: 90,
     src: '/assets/minions.png',
-    glowColor: '#fed330',
   },
 
   collider: {
@@ -32,7 +31,7 @@ world.addEntity('player', {
 
 world.addEntity('wall', {
   position: { x: 500, y: 800 },
-  shape: { type: 'square', size: 300, color: '#fc5c65' },
+  shape: { type: 'square', size: 300, color: 0xfc5c65 },
 
   collider: {
     enabled: true,

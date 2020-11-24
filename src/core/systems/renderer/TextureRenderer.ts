@@ -27,7 +27,7 @@ export const TextureRendererSystem = createSystem({
     }
   },
 
-  async onTick(es) {
+  onTick(es) {
     es.forEach((entity) => {
       const { position } = entity.data
 

@@ -1,22 +1,46 @@
+import { Graphics } from 'pixi.js'
+
+import { pixi } from '../../../gfx/pixi'
+
 import { createSystem } from '../utils/createSystem'
 
 export const ShapeRendererSystem = createSystem({
   deps: ['position', 'shape'],
 
+  onSetup(es, w) {
+    es.forEach((entity) => {
+      const { position, shape } = entity.data
+
+      const { x, y } = position
+      const { type, color, size } = shape
+
+      if (type === 'square') {
+        const r = new Graphics()
+        r.beginFill(color)
+        r.drawRect(x, y, size, size)
+        r.endFill()
+
+        r.name = entity.id
+
+        pixi.stage.addChild(r)
+
+        console.log(`square(${x}, ${y}): {size: ${size}}`)
+      }
+    })
+  },
+
   onTick(es, w) {
-    // if (!ctx) return
-
-    // ctx.fillStyle = '#111'
-    // ctx.fillRect(0, 0, window.innerWidth * 2, window.innerHeight * 2)
-
     es.forEach((entity) => {
       const { position, shape } = entity.data
 
       const { x, y } = position
       const { color, size } = shape
 
-      // if (shape.type === 'square') return square(x, y, size, color)
-      // if (shape.type === 'circle') return circle(x, y, size, color)
+      const object = pixi.stage.getChildByName(entity.id)
+      if (!object) return
+
+      object.x = x
+      object.y = y
     })
   },
 })

@@ -63,15 +63,12 @@ export class World {
   async run(lifecycle: 'setup' | 'tick') {
     for (const system of this.systems) {
       const { deps, onTick, onSetup } = system
+
       const process = lifecycle === 'setup' ? onSetup : onTick
+      if (!process) continue
 
-      if (!deps) {
-        if (process) await process([], this)
-        continue
-      }
-
-      const entities = filterEntities(this.entities, deps)
-      if (process) await process(entities, this)
+      const entities = deps ? filterEntities(this.entities, deps) : []
+      await process(entities, this)
     }
   }
 

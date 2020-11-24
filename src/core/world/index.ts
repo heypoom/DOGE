@@ -103,7 +103,6 @@ export class World {
     this.setup()
 
     const systems = this.systems.filter((s) => s.runOn === 'tick')
-    console.log('Tick systems:', systems)
 
     pixi.ticker.add((delta) => this.tick(delta, systems))
   }

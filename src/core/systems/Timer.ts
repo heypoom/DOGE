@@ -1,12 +1,16 @@
-import type { ISystemHandler } from '../@types/ISystemHandler'
+import { createSystem } from './utils/createSystem'
 
-export const Timer: ISystemHandler<['timer']> = (es, w) => {
-  es.forEach((e) => {
-    const { timer } = e.data
-    const { enabled } = timer
+export const TimerSystem = createSystem({
+  deps: ['timer'],
 
-    if (!enabled) return
+  async onTick(es, w) {
+    es.forEach((e) => {
+      const { timer } = e.data
+      const { enabled } = timer
 
-    timer.deltaTime++
-  })
-}
+      if (!enabled) return
+
+      timer.deltaTime++
+    })
+  },
+})

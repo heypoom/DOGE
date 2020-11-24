@@ -1,6 +1,6 @@
 import type { IDirection } from '../actions/@types/IActorAction'
 
-import type { ISystemHandler } from '../@types/ISystemHandler'
+import { createSystem } from './utils/createSystem'
 
 const keymap: Record<string, IDirection> = {
   ArrowUp: 'up',
@@ -9,16 +9,18 @@ const keymap: Record<string, IDirection> = {
   ArrowRight: 'right',
 }
 
-type IDep = ['position', 'movement', 'collider']
+export const MovementSystem = createSystem({
+  deps: ['position', 'movement', 'collider'],
 
-export const Movement: ISystemHandler<IDep> = (e, w) => {
-  const { keyState } = w.get('game').data
-  const player = w.get('player')
+  async onTick(e, w) {
+    const { keyState } = w.get('game').data
+    const player = w.get('player')
 
-  Object.entries(keyState).forEach(([key, state]) => {
-    if (state) {
-      const direction = keymap[key]
-      if (direction) w.act('@actor/move', { direction }, player)
-    }
-  })
-}
+    Object.entries(keyState).forEach(([key, state]) => {
+      if (state) {
+        const direction = keymap[key]
+        if (direction) w.act('@actor/move', { direction }, player)
+      }
+    })
+  },
+})

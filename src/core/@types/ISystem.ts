@@ -1,10 +1,16 @@
-import type { IEntityOf } from './entities'
 import type { IComponentType } from './components'
-
-import type { World } from '../world'
+import type { ISystemHandler } from './ISystemHandler'
 
 export interface ISystem<T extends IComponentType[] = IComponentType[]> {
-  runOn?: 'setup' | 'tick'
+  /** Name of the system */
+  name?: string
+
+  /** Which components does this system need? */
   deps?: T
-  process: (entities: IEntityOf<T>[], world: World) => void | Promise<void>
+
+  /** Run this system handler on setup */
+  onSetup?: ISystemHandler<T>
+
+  /** Run this handler on tick (update) */
+  onTick?: ISystemHandler<T>
 }

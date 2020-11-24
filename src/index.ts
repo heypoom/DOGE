@@ -1,18 +1,15 @@
 import { World } from './core/world'
-import { Collider } from './core/systems/Collider'
 
 import {
-  KeyVisualizer,
-  ShapeRenderer,
-  TextureRenderer,
-  TextureRendererSetup,
-  Movement,
+  ShapeRendererSystem,
+  TextureRendererSystem,
+  KeyVisualizerSystem,
+  MovementSystem,
+  ColliderSystem,
+  KeyVisualizerSystem,
 } from './core/systems'
 
 import { pixi } from './gfx/pixi'
-
-import { Timer } from './core/systems/Timer'
-import { action } from './core/actions/createAction'
 
 export const world = new World()
 
@@ -62,48 +59,29 @@ world.addEntity('game', {
   },
 })
 
-world.addSystem(TextureRenderer, ['position', 'texture'])
-world.addSetupSystem(TextureRendererSetup, ['position', 'texture'])
+world.addSystem(TextureRendererSystem)
+world.addSystem(ShapeRendererSystem)
+world.addSystem(MovementSystem)
+world.addSystem(ColliderSystem)
+world.addSystem(KeyVisualizerSystem)
 
-world.addSystem(ShapeRenderer, ['position', 'shape'])
-world.addSystem(KeyVisualizer, ['keyState'])
-world.addSystem(Movement)
-world.addSystem(Collider, ['position', 'collider'])
-world.addSystem(Timer, ['timer'])
+world.addSystem({
+  onSetup: (e, w) => {
+    if (!pixi) return
 
-world.addSetupSystem((e, w) => {
-  if (!pixi) return
+    document.body.appendChild(pixi.view)
+    pixi.renderer.backgroundColor = 0x2d2d30
 
-  document.body.appendChild(pixi.view)
-  pixi.renderer.backgroundColor = 0x2d2d30
+    const game = world.get('game').data
+
+    document.addEventListener('keydown', (e) => {
+      game.keyState[e.key] = true
+    })
+
+    document.addEventListener('keyup', (e) => {
+      game.keyState[e.key] = false
+    })
+  },
 })
-
-world.addSystem((e, w) => {
-  const wall = w.get('wall').data
-  const game = w.get('game').data
-
-  const { deltaTime } = game.timer
-
-  if (deltaTime > window.innerWidth * 2) return
-  if (deltaTime > window.innerHeight * 2) return
-
-  wall.position.x = deltaTime
-  wall.position.y = deltaTime / 2
-}, [])
 
 world.start()
-
-// if (canvas) {
-//   canvas.width = window.innerWidth * 2
-//   canvas.height = window.innerHeight * 2
-// }
-
-const game = world.get('game').data
-
-document.addEventListener('keydown', (e) => {
-  game.keyState[e.key] = true
-})
-
-document.addEventListener('keyup', (e) => {
-  game.keyState[e.key] = false
-})

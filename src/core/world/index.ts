@@ -15,21 +15,27 @@ import type { IActionType, IRootActionMap } from '../actions/@types'
 import { pixi } from '../../gfx/pixi'
 
 import type { IComponentType } from '../@types/components'
-import type { ISystemHandler } from '../@types/ISystemHandler'
+
+function filterEntities(entities: IEntity[], deps: IComponentType[]) {
+  if (deps.length === 0) return entities as IEntityOf[]
+
+  return entities.filter((e) => {
+    const keys = Object.keys(e.data)
+
+    return deps?.every((dep) => keys.includes(dep))
+  }) as IEntityOf[]
+}
 
 export class World {
   entities: IEntity[] = []
   systems: ISystem[] = []
 
   setup() {
-    const systems = this.systems.filter((s) => s.runOn === 'setup')
-    console.log(`[Setup] Found ${systems.length} startup system.`)
-
-    this.run(systems, this.entities).then()
+    this.run('setup').then()
   }
 
-  tick(delta: number, systems: ISystem[]) {
-    this.run(systems, this.entities).then()
+  tick(delta: number) {
+    this.run('tick').then()
   }
 
   list<T extends IEntityType>(type: T): IEntity<T>[] {
@@ -50,44 +56,22 @@ export class World {
     return entity
   }
 
-  addSystem<T extends IComponentType[]>(
-    process: ISystemHandler<T>,
-    deps?: T,
-    options?: Partial<Pick<ISystem, 'runOn'>>,
-  ) {
-    const system: ISystem<T> = {
-      deps,
-      process,
-      runOn: options?.runOn ?? 'tick',
-    }
-
+  addSystem(system: ISystem) {
     this.systems.push(system)
   }
 
-  addSetupSystem<T extends IComponentType[]>(
-    process: ISystemHandler<T>,
-    deps?: T,
-  ) {
-    this.addSystem(process, deps, { runOn: 'setup' })
-  }
+  async run(lifecycle: 'setup' | 'tick') {
+    for (const system of this.systems) {
+      const { deps, onTick, onSetup } = system
+      const process = lifecycle === 'setup' ? onSetup : onTick
 
-  async run(systems: ISystem[], entities: IEntity[]) {
-    for (const system of systems) {
-      if (!system.deps) {
-        await system.process([], this)
+      if (!deps) {
+        if (process) await process([], this)
         continue
       }
 
-      const filtered =
-        system.deps.length === 0
-          ? entities
-          : entities.filter((e) => {
-              const keys = Object.keys(e.data)
-
-              return system.deps?.every((dep) => keys.includes(dep))
-            })
-
-      await system.process(filtered as IEntityOf[], this)
+      const entities = filterEntities(this.entities, deps)
+      if (process) await process(entities, this)
     }
   }
 
@@ -105,8 +89,6 @@ export class World {
   start() {
     this.setup()
 
-    const systems = this.systems.filter((s) => s.runOn === 'tick')
-
-    pixi.ticker.add((delta) => this.tick(delta, systems))
+    pixi.ticker.add((delta) => this.tick(delta))
   }
 }

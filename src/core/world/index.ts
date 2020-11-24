@@ -12,6 +12,8 @@ import type {
 import { RootActions } from '../actions'
 import type { IActionType, IRootActionMap } from '../actions/@types'
 
+import { pixi } from '../../gfx/pixi'
+
 import type { IComponentType } from '../@types/components'
 import type { ISystemHandler } from '../@types/ISystemHandler'
 
@@ -26,7 +28,7 @@ export class World {
     this.run(systems, this.entities)
   }
 
-  tick() {
+  tick(delta: number) {
     const systems = this.systems.filter((s) => s.runOn === 'tick')
 
     this.run(systems, this.entities)
@@ -88,12 +90,6 @@ export class World {
     })
   }
 
-  loop = () => {
-    this.tick()
-
-    requestAnimationFrame(this.loop)
-  }
-
   act<T extends IActionType, E extends IEntityType = IEntityType>(
     type: T,
     data: IRootActionMap[T] | undefined,
@@ -108,6 +104,6 @@ export class World {
   start() {
     this.setup()
 
-    this.loop()
+    pixi.ticker.add((delta) => this.tick(delta))
   }
 }

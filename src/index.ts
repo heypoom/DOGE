@@ -9,9 +9,10 @@ import {
   Movement,
 } from './core/systems'
 
+import { pixi } from './gfx/pixi'
+
 import { Timer } from './core/systems/Timer'
 import { action } from './core/actions/createAction'
-import { pixi } from './gfx/pixi'
 
 export const world = new World()
 

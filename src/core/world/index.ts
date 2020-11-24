@@ -28,9 +28,7 @@ export class World {
     this.run(systems, this.entities)
   }
 
-  tick(delta: number) {
-    const systems = this.systems.filter((s) => s.runOn === 'tick')
-
+  tick(delta: number, systems: ISystem[]) {
     this.run(systems, this.entities)
   }
 
@@ -104,6 +102,9 @@ export class World {
   start() {
     this.setup()
 
-    pixi.ticker.add((delta) => this.tick(delta))
+    const systems = this.systems.filter((s) => s.runOn === 'tick')
+    console.log('Tick systems:', systems)
+
+    pixi.ticker.add((delta) => this.tick(delta, systems))
   }
 }

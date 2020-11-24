@@ -11,6 +11,7 @@ import {
 import { pixi } from './gfx/pixi'
 
 export const world = new World()
+window.world = world
 
 world.addEntity('player', {
   position: { x: 100, y: 100 },
@@ -30,13 +31,13 @@ world.addEntity('player', {
 })
 
 world.addEntity('wall', {
-  position: { x: 500, y: 800 },
-  shape: { type: 'square', size: 300, color: 0xfc5c65 },
+  position: { x: 200, y: 50 },
+  shape: { type: 'square', size: 150, color: 0xfc5c65 },
 
   collider: {
     enabled: true,
     role: 'target',
-    size: 300,
+    size: 150,
 
     // onCollision: action('@wall/speedboost'),
   },

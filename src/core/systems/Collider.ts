@@ -1,3 +1,7 @@
+import { Graphics, Rectangle } from 'pixi.js'
+
+import { pixi } from '../../gfx/pixi'
+
 import type { IEntity } from '../@types/IEntity'
 
 import { createSystem } from './utils/createSystem'
@@ -29,14 +33,6 @@ export const ColliderSystem = createSystem({
         top: isTop,
         bottom: isBottom,
       }
-
-      const collisionData = [isLeft, isRight, isTop, isBottom]
-
-      collisionData.forEach((state, i) => {
-        // if (!ctx) return
-        // ctx.fillStyle = state ? '#26de81' : '#eb3b5a'
-        // ctx.fillRect(i * 10, 15, 10, 10)
-      })
 
       const isColliding = isLeft && isRight && isTop && isBottom
 

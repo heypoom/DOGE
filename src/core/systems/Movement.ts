@@ -7,6 +7,10 @@ const keymap: Record<string, IDirection> = {
   ArrowDown: 'down',
   ArrowLeft: 'left',
   ArrowRight: 'right',
+  w: 'up',
+  a: 'left',
+  s: 'down',
+  d: 'right',
 }
 
 export const MovementSystem = createSystem({

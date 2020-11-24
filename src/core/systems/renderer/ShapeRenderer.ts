@@ -1,16 +1,16 @@
-import { ctx, circle, square, image } from '../../../canvas'
+import { ctx, circle, square } from '../../../canvas'
 
-import type { IEntityOf } from '../../@types/entities'
+import type { ISystemHandler } from '../../@types/ISystemHandler'
 
-type ShapedEntity = IEntityOf<['position', 'shape']>
+type IDep = ['position', 'shape']
 
-export function ShapeRenderer(entities: ShapedEntity[]) {
+export const ShapeRenderer: ISystemHandler<IDep> = (es, w) => {
   if (!ctx) return
 
   ctx.fillStyle = '#111'
   ctx.fillRect(0, 0, window.innerWidth * 2, window.innerHeight * 2)
 
-  entities.forEach((entity) => {
+  es.forEach((entity) => {
     const { position, shape } = entity.data
 
     const { x, y } = position

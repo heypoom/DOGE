@@ -1,54 +1,24 @@
-import type { IEntityOf } from '../@types/entities'
-import type { World } from '../world'
+import type { IDirection } from '../actions/@types/IActorAction'
 
-type IMovableEntity = IEntityOf<['position', 'movement', 'collider']>
+import type { ISystemHandler } from '../@types/ISystemHandler'
 
-const screenW = window.innerWidth * 2
-const screenH = window.innerHeight * 2
-
-const keymap: Record<string, (e: IMovableEntity) => void> = {
-  ArrowUp(e) {
-    const { position, movement, collider } = e.data
-
-    if (position.y > 0) {
-      position.y -= movement.speed
-    }
-  },
-
-  ArrowDown(e) {
-    const { position, movement, collider } = e.data
-
-    if (position.y < screenH - movement.speed - 50) {
-      position.y += movement.speed
-    }
-  },
-
-  ArrowLeft(e) {
-    const { position, movement, collider } = e.data
-
-    if (position.x > 0) {
-      position.x -= movement.speed
-    }
-  },
-
-  ArrowRight(e) {
-    const { position, movement, collider } = e.data
-
-    if (position.x < screenW - movement.speed) {
-      position.x += movement.speed
-    }
-  },
+const keymap: Record<string, IDirection> = {
+  ArrowUp: 'up',
+  ArrowDown: 'down',
+  ArrowLeft: 'left',
+  ArrowRight: 'right',
 }
 
-export function Movement(entities: IMovableEntity[], world: World) {
-  const { keyState } = world.get('game').data
+type IDep = ['position', 'movement', 'collider']
 
-  entities.forEach((e) => {
-    Object.entries(keyState).forEach(([key, state]) => {
-      if (state) {
-        const handle = keymap[key]
-        if (handle) handle(e)
-      }
-    })
+export const Movement: ISystemHandler<IDep> = (e, w) => {
+  const { keyState } = w.get('game').data
+  const player = w.get('player')
+
+  Object.entries(keyState).forEach(([key, state]) => {
+    if (state) {
+      const direction = keymap[key]
+      if (direction) w.act('@actor/move', { direction }, player)
+    }
   })
 }

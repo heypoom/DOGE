@@ -88,7 +88,7 @@ world.addEntity('game', {
 world.addSystem(ShapeRenderer, ['position', 'shape'])
 world.addSystem(TextureRenderer, ['position', 'texture'])
 world.addSystem(KeyVisualizer, ['keyState'])
-world.addSystem(Movement, ['position', 'movement', 'collider'])
+world.addSystem(Movement)
 world.addSystem(Collider, ['position', 'collider'])
 world.addSystem(Timer, ['timer'])
 

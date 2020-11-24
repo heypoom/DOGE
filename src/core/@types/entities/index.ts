@@ -1,15 +1,16 @@
 import type { IWall } from './IWall'
 import type { IGame } from './IGame'
 import type { IPlayer } from './IPlayer'
+import type { IActor } from './IActor'
 
 import type { IEntity } from '../IEntity'
-
 import type { IComponentType, PickComponents } from '../components'
 
 export interface IEntityMap {
   player: IPlayer
   wall: IWall
   game: IGame
+  actor: IActor
 }
 
 export type IEntityType = keyof IEntityMap

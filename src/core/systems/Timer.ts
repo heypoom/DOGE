@@ -1,9 +1,7 @@
-import type { IEntityOf } from '../@types/entities'
+import type { ISystemHandler } from '../@types/ISystemHandler'
 
-type ITimerEntity = IEntityOf<['timer']>
-
-export function Timer(entities: ITimerEntity[]) {
-  entities.forEach((e) => {
+export const Timer: ISystemHandler<['timer']> = (es, w) => {
+  es.forEach((e) => {
     const { timer } = e.data
     const { enabled } = timer
 

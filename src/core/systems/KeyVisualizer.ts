@@ -1,12 +1,12 @@
 import { ctx } from '../../canvas'
 
-import type { IEntityOf } from '../@types/entities'
+import type { ISystemHandler } from '../@types/ISystemHandler'
 
 const debugSize = 10
 
-export function KeyVisualizer(entities: IEntityOf<['keyState']>[]) {
-  entities.forEach((e) => {
-    Object.entries(e.data.keyState).forEach(([key, state], i) => {
+export const KeyVisualizer: ISystemHandler<['keyState']> = (es, w) => {
+  es.forEach((e) => {
+    Object.values(e.data.keyState).forEach((state, i) => {
       if (!ctx) return
 
       // Debug Squares

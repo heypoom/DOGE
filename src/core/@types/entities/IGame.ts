@@ -1,5 +1,5 @@
 import { Schema } from '../index'
 
-const schema = Schema('keyState', 'timer')
+const GameSchema = Schema('keyState', 'timer')
 
-export type IGame = typeof schema
+export type IGame = typeof GameSchema

@@ -9,12 +9,11 @@ import type {
   IEntityType,
 } from '../@types/entities'
 
-import type { IComponentType } from '../@types/components'
+import { RootActions } from '../actions'
+import type { IActionType, IRootActionMap } from '../actions/@types'
 
-type ISystemHandler<T extends IComponentType[]> = (
-  entities: IEntityOf<T>[],
-  world: World,
-) => void
+import type { IComponentType } from '../@types/components'
+import type { ISystemHandler } from '../@types/ISystemHandler'
 
 export class World {
   entities: IEntity[] = []
@@ -53,7 +52,7 @@ export class World {
 
   addSystem<T extends IComponentType[]>(
     process: ISystemHandler<T>,
-    deps: T,
+    deps?: T,
     options?: Partial<Pick<ISystem, 'runOn'>>,
   ) {
     const system: ISystem<T> = {
@@ -67,18 +66,23 @@ export class World {
 
   addSetupSystem<T extends IComponentType[]>(
     process: ISystemHandler<T>,
-    deps: T,
+    deps?: T,
   ) {
     this.addSystem(process, deps, { runOn: 'setup' })
   }
 
   run(systems: ISystem[], entities: IEntity[]) {
     systems.forEach((system) => {
-      const filtered = entities.filter((e) => {
-        const keys = Object.keys(e.data)
+      if (!system.deps) return system.process([], this)
 
-        return system.deps.every((dep) => keys.includes(dep))
-      })
+      const filtered =
+        system.deps.length === 0
+          ? entities
+          : entities.filter((e) => {
+              const keys = Object.keys(e.data)
+
+              return system.deps?.every((dep) => keys.includes(dep))
+            })
 
       system.process(filtered as IEntityOf[], this)
     })
@@ -88,6 +92,17 @@ export class World {
     this.tick()
 
     requestAnimationFrame(this.loop)
+  }
+
+  act<T extends IActionType>(
+    type: T,
+    data: IRootActionMap[T],
+    entity: IEntity,
+  ) {
+    console.log(`${entity.type}(${type}):`, data)
+
+    const action = RootActions[type]
+    if (action) action(data as never, entity as never, this)
   }
 
   start() {

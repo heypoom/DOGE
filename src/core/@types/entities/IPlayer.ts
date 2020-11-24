@@ -1,5 +1,6 @@
 import { Schema } from '../index'
+import type { IActor } from './IActor'
 
-const schema = Schema('position', 'movement', 'texture', 'collider')
+const PlayerSchema = Schema()
 
-export type IPlayer = typeof schema
+export type IPlayer = IActor & typeof PlayerSchema

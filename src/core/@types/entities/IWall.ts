@@ -1,5 +1,5 @@
 import { Schema } from '../index'
 
-const schema = Schema('position', 'shape', 'collider')
+const WallSchema = Schema('position', 'shape', 'collider')
 
-export type IWall = typeof schema
+export type IWall = typeof WallSchema

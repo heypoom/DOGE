@@ -1,19 +1,16 @@
-import type { World } from '../world'
-
-import type { IEntityOf } from '../@types/entities'
-
 import { ctx } from '../../canvas'
+import type { ISystemHandler } from '../@types/ISystemHandler'
 
-type ICollidable = IEntityOf<['position', 'collider']>
+type IDep = ['position', 'collider']
 
-export function Collider(entities: ICollidable[], world: World) {
-  entities.forEach((e) => {
+export const Collider: ISystemHandler<IDep> = (es, w) => {
+  es.forEach((e) => {
     const target = e.data
     const { enabled, role, onCollision } = target.collider
 
     if (!enabled || role !== 'target') return
 
-    const player = world.get('player').data
+    const player = w.get('player').data
     if (!player) return
 
     const { x, y } = player.position

@@ -1,13 +1,13 @@
 import { ctx, image } from '../../../canvas'
 
-import type { IEntityOf } from '../../@types/entities'
+import type { ISystemHandler } from '../../@types/ISystemHandler'
 
-type TexturedEntity = IEntityOf<['position', 'texture']>
+type IDep = ['position', 'texture']
 
-export function TextureRenderer(entities: TexturedEntity[]) {
+export const TextureRenderer: ISystemHandler<IDep> = (es, w) => {
   if (!ctx) return
 
-  entities.forEach((entity) => {
+  es.forEach((entity) => {
     const { position, texture } = entity.data
 
     image(

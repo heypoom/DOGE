@@ -11,17 +11,13 @@ import {
 } from './core/systems'
 
 import { Timer } from './core/systems/Timer'
+import { action } from './core/actions/createAction'
 
 export const world = new World()
 
 world.addEntity('player', {
   position: { x: 100, y: 100 },
   movement: { speed: 10 },
-  // shape: {
-  //   shape: 'circle',
-  //   size: 40,
-  //   color: '#fed330',
-  // },
 
   texture: {
     width: 160,
@@ -34,9 +30,6 @@ world.addEntity('player', {
     enabled: true,
     role: 'target',
     size: 40,
-    isColliding: false,
-    collidingAt: {},
-    onCollision: () => {},
   },
 })
 
@@ -47,26 +40,9 @@ world.addEntity('wall', {
   collider: {
     enabled: true,
     role: 'target',
-    isColliding: false,
-    collidingAt: {},
     size: 300,
 
-    onCollision() {
-      const wall = world.get('wall').data
-      const player = world.get('player').data
-
-      wall.shape.color = '#2bcbba'
-
-      player.movement.speed = 100
-      // player.shape.color = '#2bcbba'
-
-      setTimeout(() => {
-        wall.shape.color = '#eb3b5a'
-
-        player.movement.speed = 10
-        // player.shape.color = '#fed330'
-      }, 2000)
-    },
+    onCollision: action('@wall/speedboost'),
   },
 })
 

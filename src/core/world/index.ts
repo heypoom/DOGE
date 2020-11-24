@@ -94,10 +94,10 @@ export class World {
     requestAnimationFrame(this.loop)
   }
 
-  act<T extends IActionType>(
+  act<T extends IActionType, E extends IEntityType = IEntityType>(
     type: T,
     data: IRootActionMap[T],
-    entity: IEntity,
+    entity: IEntity<E>,
   ) {
     console.log(`${entity.type}(${type}):`, data)
 

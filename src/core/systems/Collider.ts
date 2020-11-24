@@ -1,4 +1,5 @@
 import { ctx } from '../../canvas'
+import type { IEntity } from '../@types/IEntity'
 import type { ISystemHandler } from '../@types/ISystemHandler'
 
 type IDep = ['position', 'collider']
@@ -39,7 +40,9 @@ export const Collider: ISystemHandler<IDep> = (es, w) => {
 
     const isColliding = isLeft && isRight && isTop && isBottom
 
-    if (isColliding) onCollision()
+    if (isColliding && onCollision) {
+      w.act(onCollision.type, onCollision.data, e as IEntity)
+    }
 
     target.collider.isColliding = isColliding
     player.collider.isColliding = isColliding

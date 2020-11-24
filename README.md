@@ -38,15 +38,17 @@ Components refer to the pieces of data that can be used in the entities in the g
 
 For example: `Position`, `Movement`, `Inventory`, `Shape`, `Texture`, `Timer`, `Collider`, etc.
 
-Components in DOGE are just a plain TypeScript type that describe which data it contains. Here is how `Position` and `Texture` looks like:
+Components in DOGE are plain TypeScript types that describes which data they contain. Here is how `Position` and `Texture` looks like:
 
 ```ts
-// src/core/@types/components
+// src/core/@types/components/IPosition.ts
 
 interface IPosition {
   x: number
   y: number
 }
+
+// src/core/@types/components/ITexture.ts
 
 interface ITexture {
   src: string

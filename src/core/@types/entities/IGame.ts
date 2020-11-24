@@ -1,4 +1,4 @@
-import { Schema } from '../index'
+import { Schema } from './utils/schema'
 
 const GameSchema = Schema('keyState', 'timer')
 

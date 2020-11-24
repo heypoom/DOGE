@@ -1,4 +1,5 @@
-import { Schema } from '../index'
+import { Schema } from './utils/schema'
+
 import type { IActor } from './IActor'
 
 const PlayerSchema = Schema()

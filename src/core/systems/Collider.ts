@@ -1,5 +1,5 @@
-import { ctx } from '../../canvas'
 import type { IEntity } from '../@types/IEntity'
+
 import type { ISystemHandler } from '../@types/ISystemHandler'
 
 type IDep = ['position', 'collider']
@@ -32,10 +32,9 @@ export const Collider: ISystemHandler<IDep> = (es, w) => {
     const collisionData = [isLeft, isRight, isTop, isBottom]
 
     collisionData.forEach((state, i) => {
-      if (!ctx) return
-
-      ctx.fillStyle = state ? '#26de81' : '#eb3b5a'
-      ctx.fillRect(i * 10, 15, 10, 10)
+      // if (!ctx) return
+      // ctx.fillStyle = state ? '#26de81' : '#eb3b5a'
+      // ctx.fillRect(i * 10, 15, 10, 10)
     })
 
     const isColliding = isLeft && isRight && isTop && isBottom

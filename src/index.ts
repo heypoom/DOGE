@@ -1,5 +1,3 @@
-import { canvas, ctx } from './canvas/context'
-
 import { World } from './core/world'
 import { Collider } from './core/systems/Collider'
 
@@ -12,6 +10,7 @@ import {
 
 import { Timer } from './core/systems/Timer'
 import { action } from './core/actions/createAction'
+import { pixi, setupPixi } from './gfx/pixi'
 
 export const world = new World()
 
@@ -68,7 +67,9 @@ world.addSystem(Movement)
 world.addSystem(Collider, ['position', 'collider'])
 world.addSystem(Timer, ['timer'])
 
-world.addSetupSystem((e, w) => {}, [])
+world.addSetupSystem((e, w) => {
+  if (pixi) document.body.appendChild(pixi.view)
+})
 
 world.addSystem((e, w) => {
   const wall = w.get('wall').data
@@ -85,10 +86,10 @@ world.addSystem((e, w) => {
 
 world.start()
 
-if (canvas) {
-  canvas.width = window.innerWidth * 2
-  canvas.height = window.innerHeight * 2
-}
+// if (canvas) {
+//   canvas.width = window.innerWidth * 2
+//   canvas.height = window.innerHeight * 2
+// }
 
 const game = world.get('game').data
 

@@ -10,6 +10,7 @@ module.exports = {
   ],
   installOptions: {
     installTypes: true,
+    namedExports: ['pixi.js'],
   },
   devOptions: {
     /* ... */

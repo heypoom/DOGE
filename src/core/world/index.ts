@@ -25,11 +25,11 @@ export class World {
     const systems = this.systems.filter((s) => s.runOn === 'setup')
     console.log(`[Setup] Found ${systems.length} startup system.`)
 
-    this.run(systems, this.entities)
+    this.run(systems, this.entities).then()
   }
 
   tick(delta: number, systems: ISystem[]) {
-    this.run(systems, this.entities)
+    this.run(systems, this.entities).then()
   }
 
   list<T extends IEntityType>(type: T): IEntity<T>[] {
@@ -71,9 +71,12 @@ export class World {
     this.addSystem(process, deps, { runOn: 'setup' })
   }
 
-  run(systems: ISystem[], entities: IEntity[]) {
-    systems.forEach((system) => {
-      if (!system.deps) return system.process([], this)
+  async run(systems: ISystem[], entities: IEntity[]) {
+    for (const system of systems) {
+      if (!system.deps) {
+        await system.process([], this)
+        continue
+      }
 
       const filtered =
         system.deps.length === 0
@@ -84,8 +87,8 @@ export class World {
               return system.deps?.every((dep) => keys.includes(dep))
             })
 
-      system.process(filtered as IEntityOf[], this)
-    })
+      await system.process(filtered as IEntityOf[], this)
+    }
   }
 
   act<T extends IActionType, E extends IEntityType = IEntityType>(

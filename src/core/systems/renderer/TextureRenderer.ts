@@ -1,4 +1,4 @@
-import { Sprite, TextureLoader, settings, SCALE_MODES } from 'pixi.js'
+import { Sprite, Texture, TextureLoader, settings, SCALE_MODES } from 'pixi.js'
 
 import { pixi } from '../../../gfx/pixi'
 
@@ -6,25 +6,35 @@ import type { ISystemHandler } from '../../@types/ISystemHandler'
 
 type IDep = ['position', 'texture']
 
-export const TextureRendererSetup: ISystemHandler<IDep> = (es, w) => {
-  es.forEach((entity) => {
-    const { position, texture } = entity.data
+const addTexture = (src: string) =>
+  new Promise<Texture>((resolve) => {
+    if (pixi.loader.resources?.[src]?.texture) {
+      return resolve(pixi.loader.resources[src].texture)
+    }
 
-    pixi.loader.add(texture.src).load(() => {
-      const tex = pixi.loader.resources[texture.src].texture
+    pixi.loader.add(src).load(() => {
+      const texture = pixi.loader.resources[src].texture
+      texture.baseTexture.scaleMode = SCALE_MODES.NEAREST
 
-      tex.baseTexture.scaleMode = SCALE_MODES.NEAREST
-
-      const sprite = new Sprite(tex)
-      sprite.x = position.x
-      sprite.y = position.y
-      sprite.width = texture.width
-      sprite.height = texture.height
-      sprite.name = entity.id
-
-      pixi.stage.addChild(sprite)
+      resolve(texture)
     })
   })
+
+export const TextureRendererSetup: ISystemHandler<IDep> = async (es, w) => {
+  for (const entity of es) {
+    const { position, texture } = entity.data
+
+    const tex = await addTexture(texture.src)
+
+    const sprite = new Sprite(tex)
+    sprite.x = position.x
+    sprite.y = position.y
+    sprite.width = texture.width
+    sprite.height = texture.height
+    sprite.name = entity.id
+
+    pixi.stage.addChild(sprite)
+  }
 }
 
 export const TextureRenderer: ISystemHandler<IDep> = (es, w) => {

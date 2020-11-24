@@ -4,7 +4,9 @@ import type { IDirection } from '../@types/IActorAction'
 const screenW = window.innerWidth * 2
 const screenH = window.innerHeight * 2
 
-export const MoveAction: Record<IDirection, (e: IEntity<'actor'>) => void> = {
+type IHandler = (e: IEntity<'actor'>) => void
+
+export const MoveAction: Record<IDirection, IHandler> = {
   up(e) {
     const { position, movement, collider } = e.data
 

@@ -30,6 +30,8 @@ const ActorSchema = Schema('position', 'movement', 'texture', 'collider')
 type IActor = typeof ActorSchema
 ```
 
+> We store the entities in `src/core/@types/entities`.
+
 ## Components
 
 Components refer to the pieces of data that can be used in the entities in the game world, and can be used by systems to perform computation.
@@ -52,6 +54,8 @@ interface ITexture {
   height: number
 }
 ```
+
+> We store the data components in `src/core/@types/components`.
 
 ## Systems
 
@@ -101,3 +105,57 @@ const TextureRendererSystem = createSystem({
   },
 })
 ```
+
+> We store the systems in `src/core/systems`.
+
+## Actions
+
+Actions refer to the action that can be performed by the entities in the game world, or triggered from the interaction between systems or entities.
+
+For example, we can use the `@actor/move` action to move the player to the left:
+
+```ts
+const player = world.get('player')
+
+world.act('@actor/move', { direction: 'left' }, player)
+```
+
+This action is used in the `MovementSystem` to make the player move according to arrow or WASD navigation.
+
+> Therefore, we can extract the logic out of our systems and into the actions to improve code maintainability and ease of debugging.
+
+To implement actions for an entity, we first declare a type that maps the action name to the action input data.
+
+```ts
+// src/core/actions/@types/IActorAction.ts
+
+interface IActorAction {
+  '@actor/move': { direction: IDirection }
+  '@actor/use': { item: IItem }
+  '@actor/paint': { team: ITeam; color: string }
+}
+```
+
+Then, we can implement actions for the actor. We can refactor the action logic into a separate file as well:
+
+```ts
+// src/core/actions/actor/index.ts
+
+const ActorActions: IActionGroup<IActorAction, 'actor'> = {
+  '@actor/move': (a, e) => MoveAction[a.direction]?.(e),
+}
+
+// src/core/actions/actor/movement.ts
+
+type IHandler = (e: IEntity<'actor'>) => void
+
+export const MoveAction: Record<IDirection, IHandler> = {
+  up(e) {
+    const { position, movement } = e.data
+
+    if (position.y > 0) position.y -= movement.speed
+  },
+}
+```
+
+> We store the actions in `src/core/actions`.

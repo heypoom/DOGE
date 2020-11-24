@@ -96,10 +96,10 @@ export class World {
 
   act<T extends IActionType, E extends IEntityType = IEntityType>(
     type: T,
-    data: IRootActionMap[T],
+    data: IRootActionMap[T] | undefined,
     entity: IEntity<E>,
   ) {
-    console.log(`${entity.type}(${type}):`, data)
+    console.log(`${entity.type}(${type}):`, data ?? 'no data')
 
     const action = RootActions[type]
     if (action) action(data as never, entity as never, this)

@@ -1,1 +1,1 @@
-export type { PickComponents } from './components/utils/PickComponents'
+export type { PickComponents } from '../components/utils/PickComponents'

@@ -43,11 +43,9 @@ world.addEntity('wall', {
   shape: { type: 'square', size: 150, color: 0xfc5c65 },
 
   collider: {
-    enabled: true,
+    enabled: false,
     role: 'target',
     size: 150,
-
-    onCollision: action('@wall/speedboost'),
   },
 })
 
@@ -76,7 +74,9 @@ function addItemDrop(type: IItemType, position: IPosition, quantity = 1) {
   })
 }
 
-addItemDrop('lateKingPhoto', { x: 70, y: 30 })
+for (let i = 0; i < 1000; i += 50) {
+  addItemDrop('lateKingPhoto', { x: i + 5, y: i })
+}
 
 world.addEntity('game', {
   keypress: {

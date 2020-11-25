@@ -15,8 +15,15 @@ export const ActorPickupAction: IActionGroup<IPickupAction, 'droppedItem'> = {
   '@actor/pickup': (a, e, w) => {
     const { item } = e.data
 
-    const player = w.get('player').data
-    player.inventory.items.push(item)
+    const { inventory } = w.get('player').data
+
+    const targetItem = inventory.items.find((i) => i.type === item.type)
+
+    if (targetItem) {
+      targetItem.quantity = (targetItem?.quantity ?? 0) + 1
+    } else {
+      inventory.items.push(item)
+    }
 
     const b = getItem(item.type)
     console.log(`pickup(${b.name}): x${item.quantity ?? 1}`, { ...item, ...b })

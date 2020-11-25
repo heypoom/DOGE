@@ -5,6 +5,7 @@ import type { ICollider } from './ICollider'
 import type { ITimer } from './ITimer'
 import type { ITexture } from './ITexture'
 import type { IInventory } from './IInventory'
+
 import type { IItem } from '../IItem'
 
 export interface IComponentMap {

@@ -4,8 +4,9 @@ import type { IPlayer } from './IPlayer'
 import type { IActor } from './IActor'
 import type { IDroppedItem } from './IDroppedItem'
 
-import type { IEntity } from '../IEntity'
 import type { IComponentType, PickComponents } from '../components'
+
+import type { IEntity } from '../../core/@types/IEntity'
 
 export interface IEntityMap {
   player: IPlayer
@@ -24,4 +25,4 @@ export type IEntityOf<T extends IComponentType[] = IComponentType[]> = IEntity<
 
 export type IEntityDataOf<T extends keyof IEntityMap> = IEntityMap[T]
 
-export { IEntity } from '../IEntity'
+export { IEntity } from '../../core/@types/IEntity'

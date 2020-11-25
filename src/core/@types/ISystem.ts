@@ -1,5 +1,6 @@
-import type { IComponentType } from './components'
 import type { ISystemHandler } from './ISystemHandler'
+
+import type { IComponentType } from '../../@types/components'
 
 export interface ISystem<T extends IComponentType[] = IComponentType[]> {
   /** Name of the system */

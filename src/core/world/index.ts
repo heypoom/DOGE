@@ -14,7 +14,7 @@ import { getSystemLifecycleHandle } from './utils/getSystemLifecycleHandle'
 import { createEntity } from './utils/createEntity'
 import { filterEntities } from './utils/filterEntities'
 
-import type { IEntity, IEntityDataOf, IEntityType } from '../@types/entities'
+import type { IEntity, IEntityDataOf, IEntityType } from '../../@types/entities'
 
 export class World {
   entities: IEntity[] = []

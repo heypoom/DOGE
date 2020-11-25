@@ -1,4 +1,4 @@
-import type { IEntityDataOf, IEntityType } from './entities'
+import type { IEntityDataOf, IEntityType } from '../../@types/entities'
 
 export interface IEntity<
   Type extends IEntityType = IEntityType,

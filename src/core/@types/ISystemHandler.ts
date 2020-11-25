@@ -1,5 +1,5 @@
-import type { IEntityOf } from './entities'
-import type { IComponentType } from './components'
+import type { IEntityOf } from '../../@types/entities'
+import type { IComponentType } from '../../@types/components'
 
 import type { World } from '../world'
 

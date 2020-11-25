@@ -66,7 +66,7 @@ world.addEntity('droppedItem', {
 })
 
 world.addEntity('game', {
-  keyState: {
+  keypress: {
     ArrowUp: false,
     ArrowDown: false,
     ArrowLeft: false,

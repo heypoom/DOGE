@@ -17,7 +17,7 @@ export interface IComponentMap {
   item: IItem
 
   timer: ITimer
-  keyState: Record<string, boolean>
+  keypress: Record<string, boolean>
 }
 
 export type IComponentType = keyof IComponentMap

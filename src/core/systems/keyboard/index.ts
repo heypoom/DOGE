@@ -3,25 +3,25 @@ import { movementKeymap } from './movement'
 import { createSystem } from '../utils/createSystem'
 
 export const KeyboardSystem = createSystem({
-  deps: ['keyState'],
+  deps: ['keypress'],
 
   onSetup([e]) {
     const game = e.data
 
     document.addEventListener('keydown', (e) => {
-      game.keyState[e.key] = true
+      game.keypress[e.key] = true
     })
 
     document.addEventListener('keyup', (e) => {
-      game.keyState[e.key] = false
+      game.keypress[e.key] = false
     })
   },
 
   async onTick([e], w) {
-    const { keyState } = e.data
+    const { keypress } = e.data
     const player = w.get('player')
 
-    Object.entries(keyState).forEach(([key, state]) => {
+    Object.entries(keypress).forEach(([key, state]) => {
       if (!state) return
 
       // Handles movement keys (wasd, arrow keys)

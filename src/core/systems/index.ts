@@ -1,7 +1,5 @@
-export { ShapeRendererSystem } from './renderer/ShapeRenderer'
-export { TextureRendererSystem } from './renderer/TextureRenderer'
-
-export { MovementSystem } from './Movement'
+export { KeyboardSystem } from './Keyboard'
 export { ColliderSystem } from './Collider'
 
-export { KeyVisualizerSystem } from './KeyVisualizer'
+export { ShapeRendererSystem } from './renderer/ShapeRenderer'
+export { TextureRendererSystem } from './renderer/TextureRenderer'

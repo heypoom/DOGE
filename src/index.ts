@@ -3,8 +3,7 @@ import { World } from './core/world'
 import {
   ShapeRendererSystem,
   TextureRendererSystem,
-  KeyVisualizerSystem,
-  MovementSystem,
+  KeyboardSystem,
   ColliderSystem,
 } from './core/systems'
 
@@ -83,9 +82,8 @@ world.addEntity('game', {
 
 world.addSystem(TextureRendererSystem)
 world.addSystem(ShapeRendererSystem)
-world.addSystem(MovementSystem)
 world.addSystem(ColliderSystem)
-world.addSystem(KeyVisualizerSystem)
+world.addSystem(KeyboardSystem)
 
 world.addSystem({
   onSetup: (e, w) => {
@@ -93,16 +91,6 @@ world.addSystem({
 
     document.body.appendChild(pixi.view)
     pixi.renderer.backgroundColor = 0x2d2d30
-
-    const game = world.get('game').data
-
-    document.addEventListener('keydown', (e) => {
-      game.keyState[e.key] = true
-    })
-
-    document.addEventListener('keyup', (e) => {
-      game.keyState[e.key] = false
-    })
   },
 })
 

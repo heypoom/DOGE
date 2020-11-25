@@ -4,6 +4,8 @@ import type { IShape } from './IShape'
 import type { ICollider } from './ICollider'
 import type { ITimer } from './ITimer'
 import type { ITexture } from './ITexture'
+import type { IInventory } from './IInventory'
+import type { IItem } from '../IItem'
 
 export interface IComponentMap {
   position: IPosition
@@ -11,6 +13,8 @@ export interface IComponentMap {
   shape: IShape
   texture: ITexture
   collider: ICollider
+  inventory: IInventory
+  item: IItem
 
   timer: ITimer
   keyState: Record<string, boolean>

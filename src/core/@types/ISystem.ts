@@ -13,4 +13,7 @@ export interface ISystem<T extends IComponentType[] = IComponentType[]> {
 
   /** Run this handler on tick (update) */
   onTick?: ISystemHandler<T>
+
+  /** Run this system handler on cleanup (removed) */
+  onCleanup?: ISystemHandler<T>
 }

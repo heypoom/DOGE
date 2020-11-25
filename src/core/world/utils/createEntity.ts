@@ -1,6 +1,6 @@
 import { v4 } from 'uuid'
 
-import type { IEntity, IEntityDataOf, IEntityType } from '../@types/entities'
+import type { IEntity, IEntityDataOf, IEntityType } from '../../@types/entities'
 
 export const createEntity = <T extends IEntityType>(
   type: T,

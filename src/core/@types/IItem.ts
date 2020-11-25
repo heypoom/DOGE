@@ -8,6 +8,8 @@ export interface IDefense {
 }
 
 export interface IItem {
+  id: string
+  name: string
   attack?: IAttack
   defense?: IDefense
 }

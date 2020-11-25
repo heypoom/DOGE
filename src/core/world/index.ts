@@ -1,30 +1,20 @@
-import { createEntity } from './createEntity'
+import { pixi } from '../../gfx/pixi'
 
-import type { ISystem } from '../@types/ISystem'
-
-import type {
-  IEntity,
-  IEntityDataOf,
-  IEntityOf,
-  IEntityType,
-} from '../@types/entities'
-
+// Actions
 import { RootActions } from '../actions'
 import type { IActionType, IRootActionMap } from '../actions/@types'
 
-import { pixi } from '../../gfx/pixi'
+// Systems
+import type { ISystem } from '../@types/ISystem'
+import type { ISystemLifecycle } from '../@types/ISystemLifecycle'
 
-import type { IComponentType } from '../@types/components'
+import { getSystemLifecycleHandle } from './utils/getSystemLifecycleHandle'
 
-function filterEntities(entities: IEntity[], deps: IComponentType[]) {
-  if (deps.length === 0) return entities as IEntityOf[]
+// Entities
+import { createEntity } from './utils/createEntity'
+import { filterEntities } from './utils/filterEntities'
 
-  return entities.filter((e) => {
-    const keys = Object.keys(e.data)
-
-    return deps?.every((dep) => keys.includes(dep))
-  }) as IEntityOf[]
-}
+import type { IEntity, IEntityDataOf, IEntityType } from '../@types/entities'
 
 export class World {
   entities: IEntity[] = []
@@ -56,19 +46,36 @@ export class World {
     return entity
   }
 
+  async removeEntity(id: string) {
+    // Get the entity to remove.
+    const entity = this.entities.find((e) => e.id === id)
+    if (!entity) return
+
+    // Execute the cleanup process.
+    await this.run('cleanup', [entity])
+
+    this.entities = this.entities.filter((e) => e.id !== id)
+  }
+
   addSystem(system: ISystem) {
     this.systems.push(system)
   }
 
-  async run(lifecycle: 'setup' | 'tick') {
-    for (const system of this.systems) {
-      const { deps, onTick, onSetup } = system
+  async run(
+    lifecycle: ISystemLifecycle,
+    entities = this.entities,
+    systems = this.systems,
+  ) {
+    for (const system of systems) {
+      const { deps } = system
 
-      const process = lifecycle === 'setup' ? onSetup : onTick
-      if (!process) continue
+      // Get the system lifecycle handle (onSetup, onTick, onCleanup)
+      const handle = getSystemLifecycleHandle(system, lifecycle)
+      if (!handle) continue
 
-      const entities = deps ? filterEntities(this.entities, deps) : []
-      await process(entities, this)
+      // Run the system handle with the entities that uses that system.
+      const objects = deps ? filterEntities(entities, deps) : []
+      await handle(objects, this)
     }
   }
 

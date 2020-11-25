@@ -2,6 +2,7 @@ import type { IWall } from './IWall'
 import type { IGame } from './IGame'
 import type { IPlayer } from './IPlayer'
 import type { IActor } from './IActor'
+import type { IDroppedItem } from './IDroppedItem'
 
 import type { IEntity } from '../IEntity'
 import type { IComponentType, PickComponents } from '../components'
@@ -11,6 +12,7 @@ export interface IEntityMap {
   wall: IWall
   game: IGame
   actor: IActor
+  droppedItem: IDroppedItem
 }
 
 export type IEntityType = keyof IEntityMap

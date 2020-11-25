@@ -1,4 +1,8 @@
 import { WallActions } from './wall'
-import { ActorActions } from './actor'
+import { ActorActions, ActorPickupAction } from './actor'
 
-export const RootActions = { ...ActorActions, ...WallActions }
+export const RootActions = {
+  ...ActorActions,
+  ...WallActions,
+  ...ActorPickupAction,
+}

@@ -8,3 +8,7 @@ export interface IActorAction {
   '@actor/move': { direction: IDirection }
   '@actor/use': { item: IItem }
 }
+
+export interface IPickupAction {
+  '@actor/pickup': null
+}

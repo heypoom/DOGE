@@ -1,6 +1,6 @@
 import type { IWallAction } from './IWallAction'
-import type { IActorAction } from './IActorAction'
+import type { IActorAction, IPickupAction } from './IActorAction'
 
-export type IRootActionMap = IActorAction & IWallAction
+export type IRootActionMap = IActorAction & IWallAction & IPickupAction
 
 export type IActionType = keyof IRootActionMap

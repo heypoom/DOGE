@@ -1,4 +1,4 @@
-import type { IComponentType, PickComponents } from '../@types/components'
+import type { IComponentType, PickComponents } from '../../components'
 
 export function Schema<T extends IComponentType[]>(...v: T) {
   type Entity = PickComponents<T>

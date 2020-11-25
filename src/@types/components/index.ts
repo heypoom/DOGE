@@ -6,7 +6,7 @@ import type { ITimer } from './ITimer'
 import type { ITexture } from './ITexture'
 import type { IInventory } from './IInventory'
 
-import type { IItem } from '../IItem'
+import type { IItemInstance as Item } from '../IItem'
 
 export interface IComponentMap {
   position: IPosition
@@ -15,7 +15,7 @@ export interface IComponentMap {
   texture: ITexture
   collider: ICollider
   inventory: IInventory
-  item: IItem
+  item: Item
 
   timer: ITimer
   keypress: Record<string, boolean>

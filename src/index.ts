@@ -10,6 +10,10 @@ import {
 import { action } from './actions'
 
 import { pixi } from './gfx'
+import { getItem, IItemType } from './game/items'
+
+import type { ITexture } from './@types/components/ITexture'
+import type { IPosition } from './@types/components/IPosition'
 
 export const world = new World()
 
@@ -47,24 +51,32 @@ world.addEntity('wall', {
   },
 })
 
-world.addEntity('droppedItem', {
-  position: { x: 50, y: 50 },
-  collider: {
-    enabled: true,
-    size: 15,
-    role: 'target',
-    onCollision: action('@actor/pickup'),
-  },
-  texture: {
+function addItemDrop(type: IItemType, position: IPosition, quantity = 1) {
+  const item = getItem(type)
+  if (!item) return
+
+  const missingItemSprite: ITexture = {
+    src: '/assets/minions.png',
     width: 60,
     height: 90,
-    src: '/assets/minions.png',
-  },
-  item: {
-    id: 'sword-of-the-deceased',
-    name: 'Sword of the deceased',
-  },
-})
+  }
+
+  return world.addEntity('droppedItem', {
+    position,
+    item: { type, quantity },
+
+    collider: {
+      enabled: true,
+      size: 15,
+      role: 'target',
+      onCollision: action('@actor/pickup'),
+    },
+
+    texture: item.sprite ?? missingItemSprite,
+  })
+}
+
+addItemDrop('lateKingPhoto', { x: 70, y: 30 })
 
 world.addEntity('game', {
   keypress: {

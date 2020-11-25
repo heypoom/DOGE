@@ -1,5 +1,5 @@
-import type { IItem } from '../IItem'
+import type { IItemInstance as Item } from '../IItem'
 
 export interface IInventory {
-  items: IItem[]
+  items: Item[]
 }

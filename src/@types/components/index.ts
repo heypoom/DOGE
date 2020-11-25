@@ -7,6 +7,8 @@ import type { ITexture } from './ITexture'
 import type { IInventory } from './IInventory'
 
 import type { IItemInstance as Item } from '../IItem'
+import type { IHealth } from './IHealth'
+import type { IBattleStat } from './IBattleStat'
 
 export interface IComponentMap {
   position: IPosition
@@ -19,6 +21,9 @@ export interface IComponentMap {
 
   timer: ITimer
   keypress: Record<string, boolean>
+
+  health: IHealth
+  battle: IBattleStat
 }
 
 export type IComponentType = keyof IComponentMap

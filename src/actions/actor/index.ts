@@ -9,6 +9,7 @@ export const ActorActions: IActionGroup<IActorAction, 'actor'> = {
   '@actor/move': (a, e) => MoveAction[a.direction]?.(e),
   '@actor/paint': () => {},
   '@actor/use': () => {},
+  '@effect/apply': () => {},
 }
 
 export const ActorPickupAction: IActionGroup<IPickupAction, 'droppedItem'> = {

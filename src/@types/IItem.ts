@@ -1,7 +1,7 @@
 import type { IAction } from './core'
+import type { ITexture } from './components/ITexture'
 
 import type { IItemType } from '../game/items'
-import type { ITexture } from './components/ITexture'
 
 export interface IItemInstance {
   /** Unique id for the item, used to look up the item definition. */

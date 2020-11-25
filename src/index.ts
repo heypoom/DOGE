@@ -25,6 +25,9 @@ world.addEntity('player', {
   movement: { speed: 10 },
   inventory: { items: [] },
 
+  health: { health: 10, maxHealth: 10 },
+  battle: { baseLuck: 10, baseAttack: 10, baseDefense: 10, effects: [] },
+
   texture: {
     width: 60,
     height: 90,

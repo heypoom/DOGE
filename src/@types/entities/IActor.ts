@@ -6,6 +6,8 @@ const ActorSchema = Schema(
   'texture',
   'collider',
   'inventory',
+  'battle',
+  'health',
 )
 
 export type IActor = typeof ActorSchema

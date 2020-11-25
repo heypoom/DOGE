@@ -1,14 +1,15 @@
-import { World } from './core/world'
+import { World } from './core'
 
 import {
   ShapeRendererSystem,
   TextureRendererSystem,
   KeyboardSystem,
   ColliderSystem,
-} from './core/systems'
+} from './systems'
 
-import { pixi } from './gfx/pixi'
-import { action } from './core/actions/createAction'
+import { action } from './actions'
+
+import { pixi } from './gfx'
 
 export const world = new World()
 

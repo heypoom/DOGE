@@ -1,6 +1,6 @@
-import type { World } from '../world'
 import type { IEntity } from './IEntity'
 
+import type { World } from '../../core'
 import type { IEntityType } from '../../@types/entities'
 
 export type IActionHandler<Data, E extends IEntityType> = (

@@ -1,6 +1,6 @@
 import { Graphics } from 'pixi.js'
 
-import { pixi } from '../../../gfx/pixi'
+import { pixi } from '../../gfx'
 
 import { createSystem } from '../utils/createSystem'
 

@@ -1,6 +1,6 @@
 import { Texture, SCALE_MODES } from 'pixi.js'
 
-import { pixi } from '../../../../gfx/pixi'
+import { pixi } from '../../../gfx'
 
 export const addTexture = (src: string) =>
   new Promise<Texture>((resolve) => {

@@ -1,12 +1,12 @@
-import { pixi } from '../../gfx/pixi'
+import { pixi } from '../gfx'
 
 // Actions
 import { RootActions } from '../actions'
 import type { IActionType, IRootActionMap } from '../actions/@types'
 
 // Systems
-import type { ISystem } from '../@types/ISystem'
-import type { ISystemLifecycle } from '../@types/ISystemLifecycle'
+import type { ISystem } from '../@types/core/ISystem'
+import type { ISystemLifecycle } from '../@types/core/ISystemLifecycle'
 
 import { getSystemLifecycleHandle } from './utils/getSystemLifecycleHandle'
 
@@ -14,7 +14,7 @@ import { getSystemLifecycleHandle } from './utils/getSystemLifecycleHandle'
 import { createEntity } from './utils/createEntity'
 import { filterEntities } from './utils/filterEntities'
 
-import type { IEntity, IEntityDataOf, IEntityType } from '../../@types/entities'
+import type { IEntity, IEntityDataOf, IEntityType } from '../@types/entities'
 
 export class World {
   entities: IEntity[] = []

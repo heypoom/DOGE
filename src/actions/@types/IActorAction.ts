@@ -1,4 +1,4 @@
-import type { IItem } from '../../../@types/IItem'
+import type { IItem } from '../../@types/IItem'
 
 export type ITeam = 'player' | 'enemy'
 export type IDirection = 'left' | 'right' | 'up' | 'down'

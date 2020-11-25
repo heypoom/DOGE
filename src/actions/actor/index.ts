@@ -1,7 +1,10 @@
 import { MoveAction } from './movement'
 
-import type { IActionGroup, IActionHandler } from '../../@types/IActionGroup'
 import type { IActorAction, IPickupAction } from '../@types/IActorAction'
+import type {
+  IActionGroup,
+  IActionHandler,
+} from '../../@types/core/IActionGroup'
 
 export const ActorActions: IActionGroup<IActorAction, 'actor'> = {
   '@actor/move': (a, e) => MoveAction[a.direction]?.(e),

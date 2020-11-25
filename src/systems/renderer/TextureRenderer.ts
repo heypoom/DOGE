@@ -1,6 +1,6 @@
 import { Sprite } from 'pixi.js'
 
-import { pixi } from '../../../gfx/pixi'
+import { pixi } from '../../gfx'
 
 import { addTexture } from './utils/addTexture'
 

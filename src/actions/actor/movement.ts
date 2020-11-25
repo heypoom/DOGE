@@ -1,5 +1,6 @@
-import type { IEntity } from '../../@types/IEntity'
 import type { IDirection } from '../@types/IActorAction'
+
+import type { IEntity } from '../../@types/core/IEntity'
 
 const screenW = window.innerWidth * 2
 const screenH = window.innerHeight * 2

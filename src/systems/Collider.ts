@@ -1,5 +1,4 @@
-import type { IEntity } from '../@types/IEntity'
-import type { IActionType, IRootActionMap } from '../actions/@types'
+import type { IEntity } from '../@types/core/IEntity'
 
 import { createSystem } from './utils/createSystem'
 

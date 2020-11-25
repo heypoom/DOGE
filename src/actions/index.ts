@@ -6,3 +6,5 @@ export const RootActions = {
   ...WallActions,
   ...ActorPickupAction,
 }
+
+export { action } from './createAction'

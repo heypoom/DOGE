@@ -3,8 +3,6 @@ import { MoveAction } from './movement'
 import type { IActionGroup, IActionHandler } from '../../@types/IActionGroup'
 import type { IActorAction, IPickupAction } from '../@types/IActorAction'
 
-const pickup: IActionHandler<null, 'droppedItem'> = () => {}
-
 export const ActorActions: IActionGroup<IActorAction, 'actor'> = {
   '@actor/move': (a, e) => MoveAction[a.direction]?.(e),
   '@actor/paint': () => {},

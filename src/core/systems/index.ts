@@ -1,4 +1,5 @@
-export { KeyboardSystem } from './Keyboard'
+export { KeyboardSystem } from './keyboard'
+
 export { ColliderSystem } from './Collider'
 
 export { ShapeRendererSystem } from './renderer/ShapeRenderer'

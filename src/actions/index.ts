@@ -7,4 +7,4 @@ export const RootActions = {
   ...ActorPickupAction,
 }
 
-export { action } from './createAction'
+export { action } from './utils/createAction'

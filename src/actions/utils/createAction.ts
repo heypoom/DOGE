@@ -1,6 +1,6 @@
-import type { IAction } from '../@types/core'
+import type { IAction } from '../../@types/core'
 
-import type { IActionType, IRootActionMap } from '../@types/actions'
+import type { IActionType, IRootActionMap } from '../../@types/actions'
 
 export const action = <T extends IActionType>(
   type: T,

@@ -1,4 +1,4 @@
-import type { IAction } from '../core/IAction'
+import type { IAction } from '../core'
 
 export interface ICollider {
   enabled: boolean

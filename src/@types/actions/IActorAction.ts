@@ -1,7 +1,4 @@
-import type { IItem } from '../../@types/IItem'
-
-export type ITeam = 'player' | 'enemy'
-export type IDirection = 'left' | 'right' | 'up' | 'down'
+import type { IDirection, ITeam, IItem } from '../index'
 
 export interface IActorAction {
   '@actor/paint': { team: ITeam; color: string }

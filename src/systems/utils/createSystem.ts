@@ -1,4 +1,4 @@
-import type { ISystem } from '../../@types/core/ISystem'
+import type { ISystem } from '../../@types/core'
 
 import type { IComponentType } from '../../@types/components'
 

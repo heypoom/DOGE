@@ -1,6 +1,6 @@
-import type { ISystem } from '../../@types/core/ISystem'
+import type { ISystem } from '../../@types/core'
 
-import type { ISystemLifecycle } from '../../@types/core/ISystemLifecycle'
+import type { ISystemLifecycle } from '../../@types/core'
 
 export function getSystemLifecycleHandle(
   system: ISystem,

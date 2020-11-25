@@ -1,4 +1,4 @@
-import type { IEntity } from '../@types/core/IEntity'
+import type { IEntity } from '../@types/core'
 
 import { createSystem } from './utils/createSystem'
 

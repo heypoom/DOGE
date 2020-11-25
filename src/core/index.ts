@@ -2,11 +2,11 @@ import { pixi } from '../gfx'
 
 // Actions
 import { RootActions } from '../actions'
-import type { IActionType, IRootActionMap } from '../actions/@types'
+import type { IActionType, IRootActionMap } from '../@types/actions'
 
 // Systems
-import type { ISystem } from '../@types/core/ISystem'
-import type { ISystemLifecycle } from '../@types/core/ISystemLifecycle'
+import type { ISystem } from '../@types/core'
+import type { ISystemLifecycle } from '../@types/core'
 
 import { getSystemLifecycleHandle } from './utils/getSystemLifecycleHandle'
 

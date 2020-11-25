@@ -1,4 +1,4 @@
-import type { IDirection } from '../../actions/@types/IActorAction'
+import type { IDirection } from '../../@types'
 
 export const movementKeymap: Record<string, IDirection> = {
   ArrowUp: 'up',

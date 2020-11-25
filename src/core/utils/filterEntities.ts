@@ -1,7 +1,7 @@
 import type { IEntityOf } from '../../@types/entities'
 import type { IComponentType } from '../../@types/components'
 
-import type { IEntity } from '../../@types/core/IEntity'
+import type { IEntity } from '../../@types/core'
 
 export function filterEntities(entities: IEntity[], deps: IComponentType[]) {
   if (deps.length === 0) return entities as IEntityOf[]

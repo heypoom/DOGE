@@ -1,4 +1,4 @@
-import type { IActionType, IRootActionMap } from '../../actions/@types'
+import type { IActionType, IRootActionMap } from '../actions'
 
 export interface IAction<T extends IActionType = IActionType> {
   type: T

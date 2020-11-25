@@ -38,4 +38,15 @@ export const TextureRendererSystem = createSystem({
       sprite.y = position.y
     })
   },
+
+  async onCleanup(es) {
+    es.forEach((entity) => {
+      const sprite = pixi.stage.getChildByName(entity.id)
+      if (!sprite) return
+
+      console.log(`cleanup(texture): removing sprite ${entity.id}`)
+
+      pixi.stage.removeChild(sprite)
+    })
+  },
 })

@@ -1,13 +1,11 @@
-import { Schema } from './utils/schema'
+import type { WithComponent } from '../core'
 
-const ActorSchema = Schema(
-  'position',
-  'movement',
-  'texture',
-  'collider',
-  'inventory',
-  'battle',
-  'health',
-)
-
-export type IActor = typeof ActorSchema
+export type IActor = WithComponent<
+  | 'position'
+  | 'movement'
+  | 'texture'
+  | 'collider'
+  | 'inventory'
+  | 'battle'
+  | 'health'
+>

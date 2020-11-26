@@ -1,5 +1,5 @@
-import { Schema } from './utils/schema'
+import type { WithComponent } from '../core'
 
-const DroppedItemSchema = Schema('position', 'collider', 'item', 'texture')
-
-export type IDroppedItem = typeof DroppedItemSchema
+export type IDroppedItem = WithComponent<
+  'position' | 'collider' | 'item' | 'texture'
+>

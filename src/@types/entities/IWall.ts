@@ -1,5 +1,3 @@
-import { Schema } from './utils/schema'
+import type { WithComponent } from '../core'
 
-const WallSchema = Schema('position', 'shape', 'collider')
-
-export type IWall = typeof WallSchema
+export type IWall = WithComponent<'position' | 'shape' | 'collider'>

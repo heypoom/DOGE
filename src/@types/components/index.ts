@@ -28,4 +28,4 @@ export interface IComponentMap {
 
 export type IComponentType = keyof IComponentMap
 
-export type { PickComponents } from './utils/PickComponents'
+export type { WithComponent } from './utils/PickComponents'

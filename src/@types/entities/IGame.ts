@@ -1,5 +1,3 @@
-import { Schema } from './utils/schema'
+import type { WithComponent } from '../core'
 
-const GameSchema = Schema('keypress', 'timer')
-
-export type IGame = typeof GameSchema
+export type IGame = WithComponent<'keypress' | 'timer'>

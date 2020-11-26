@@ -5,4 +5,4 @@ export * from './ISystem'
 export * from './ISystemHandler'
 export * from './ISystemLifecycle'
 
-export type { PickComponents } from '../components/utils/PickComponents'
+export type { WithComponent } from '../components/utils/PickComponents'

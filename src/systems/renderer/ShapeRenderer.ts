@@ -42,9 +42,9 @@ export const ShapeRendererSystem = createSystem({
       g.x = x
       g.y = y
 
-      g.beginFill(color)
-      g.drawRect(x, y, size, size)
-      g.endFill()
+      // g.beginFill(color)
+      // g.drawRect(x, y, size, size)
+      // g.endFill()
     })
   },
 })

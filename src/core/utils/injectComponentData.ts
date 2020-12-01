@@ -14,8 +14,9 @@ export function injectComponentData<T extends IEntityType>(
 
   e.componentIds?.forEach((id) => {
     const [type, data] = components[id]
-
     entityData[type as Keys] = data as EntityData[Keys]
+
+    // console.log(`Injecting ${type}:`, data)
   })
 
   return entityData

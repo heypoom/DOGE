@@ -54,23 +54,28 @@ world.addSharedEntity('wall', {
   },
 })
 
-function addItemDrop(type: IItemType, position: IPosition, quantity = 1) {
-  const item = getItem(type)
-  if (!item) return
+const sharedItemComponents: Partial<Record<IItemType, string[]>> = {}
 
-  return world.addEntity('droppedItem', {
-    position,
-    item: { type, quantity },
+const itemColliderId = world.addComponent('collider', {
+  enabled: true,
+  size: 15,
+  role: 'target',
+  onCollision: action('@actor/pickup'),
+})
 
-    collider: {
-      enabled: true,
-      size: 15,
-      role: 'target',
-      onCollision: action('@actor/pickup'),
-    },
+function addItemDrop(type: IItemType, position: IPosition) {
+  if (!sharedItemComponents[type]) {
+    sharedItemComponents[type] = [
+      world.addComponent('item', { type, quantity: 1 }),
+      world.addComponent('texture', getItem(type)?.sprite ?? missingItemSprite),
+    ]
+  }
 
-    texture: item.sprite ?? missingItemSprite,
-  })
+  return world.addEntityByComponents('droppedItem', [
+    world.addComponent('position', position),
+    itemColliderId,
+    ...(sharedItemComponents[type] ?? []),
+  ])
 }
 
 for (let i = 0; i < 10; i++) {

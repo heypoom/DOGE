@@ -2,7 +2,7 @@ import { v4 } from 'uuid'
 
 import { createComponent } from './createSharedComponents'
 
-import type { IComponentType } from '../../@types/components'
+import type { IComponentMap, IComponentType } from '../../@types/components'
 import type { IEntityType, IEntityDataOf } from '../../@types/entities'
 
 import type { IEntity, ISharedComponentBlock } from '../../@types/core'
@@ -16,13 +16,21 @@ export const createEntityWithComponentIds = <T extends IEntityType>(
   componentIds,
 })
 
+export const createSharedComponents = <T extends IEntityType>(
+  data: Partial<IEntityDataOf<T>>,
+) =>
+  Object.entries(data).map(([type, block]) =>
+    createComponent(
+      type as IComponentType,
+      block as Partial<IComponentMap[IComponentType]>,
+    ),
+  )
+
 export const createEntityWithSharedComponents = <T extends IEntityType>(
   type: T,
   data: IEntityDataOf<T>,
 ): [IEntity<T>, [string, ISharedComponentBlock][]] => {
-  const components = Object.entries(data).map(([type, block]) =>
-    createComponent(type as IComponentType, block),
-  )
+  const components = createSharedComponents(data)
 
   const entity: IEntity<T> = {
     id: v4(),

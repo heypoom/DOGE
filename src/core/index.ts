@@ -22,7 +22,10 @@ import type {
 } from '../@types/entities'
 
 import { createComponent } from './utils/createSharedComponents'
-import { createEntityWithSharedComponents } from './utils/createEntityWithSharedComponent'
+import {
+  createEntityWithComponentIds,
+  createEntityWithSharedComponents,
+} from './utils/createEntityWithSharedComponent'
 
 import type { IComponentMap, IComponentType } from '../@types/components'
 
@@ -53,6 +56,16 @@ export class World {
     data: IEntityDataOf<T>,
   ): IEntity<T> {
     const entity = createEntity(type, data)
+    this.entities.push(entity)
+
+    return entity
+  }
+
+  addEntityByComponents<T extends IEntityType>(
+    type: T,
+    componentIds: string[],
+  ): IEntity<T> {
+    const entity = createEntityWithComponentIds(type, componentIds)
     this.entities.push(entity)
 
     return entity
@@ -91,6 +104,8 @@ export class World {
   addComponent<T extends IComponentType>(type: T, data: IComponentMap[T]) {
     const [id, block] = createComponent(type, data)
     this.components[id] = block
+
+    return id
   }
 
   async run(

@@ -7,7 +7,4 @@ import type { ISharedComponentBlock } from '../../@types/core'
 export const createComponent = <T extends IComponentType>(
   type: T,
   data: Partial<IComponentMap[T]>,
-): [string, ISharedComponentBlock] => [
-  `shared-${type}-${shortid()}`,
-  [type, data],
-]
+): [string, ISharedComponentBlock] => [`${type}-${shortid()}`, [type, data]]

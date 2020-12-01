@@ -23,8 +23,6 @@ export type IEntityOf<T extends IComponentType = IComponentType> = IEntity<
   WithComponent<T>
 >
 
-type entity = IEntityOf<'shape' | 'texture'> 
-
 export type IEntityDataOf<T extends keyof IEntityMap> = IEntityMap[T]
 
 export { IEntity } from '../core'

@@ -6,5 +6,7 @@ export interface IEntity<
 > {
   id: string
   type: Type
-  data: Data
+
+  data?: Data
+  componentIds?: string[]
 }

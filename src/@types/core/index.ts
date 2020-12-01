@@ -1,6 +1,7 @@
 export * from './IAction'
 export * from './IActionGroup'
 export * from './IEntity'
+export * from './ISharedComponent'
 export * from './ISystem'
 export * from './ISystemHandler'
 export * from './ISystemLifecycle'

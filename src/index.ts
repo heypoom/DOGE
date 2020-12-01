@@ -12,7 +12,6 @@ import { action } from './actions'
 import { pixi } from './gfx'
 import { getItem, IItemType } from './game/items'
 
-import type { ITexture } from './@types/components/ITexture'
 import type { IPosition } from './@types/components/IPosition'
 
 import { missingItemSprite } from './constants/missingItemSprite'
@@ -43,7 +42,7 @@ world.addEntity('player', {
   },
 })
 
-world.addEntity('wall', {
+world.addSharedEntity('wall', {
   position: { x: 200, y: 50 },
   shape: { type: 'square', size: 150, color: 0xfc5c65 },
 

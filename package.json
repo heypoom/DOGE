@@ -10,13 +10,15 @@
   },
   "devDependencies": {
     "@snowpack/plugin-typescript": "^1",
+    "@types/shortid": "^0.0.29",
     "@types/snowpack-env": "^2",
     "@types/uuid": "^8.3.0",
     "snowpack": "^2",
-    "typescript": "^4"
+    "typescript": "^4.1"
   },
   "dependencies": {
     "pixi.js": "^5.3.3",
+    "shortid": "^2.2.16",
     "tsd": "^0.13.1",
     "type-fest": "^0.19.0",
     "uuid": "^8.3.1"

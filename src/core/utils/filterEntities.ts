@@ -6,10 +6,10 @@ import { injectComponentData } from './injectComponentData'
 
 export function filterEntities(
   entities: IEntity[],
-  deps: IComponentType[],
+  query: IComponentType[],
   components: ISharedComponentMap,
 ) {
-  if (deps.length === 0) return entities as IEntityOf[]
+  if (query.length === 0) return entities as IEntityOf[]
 
   return entities
     .map((e) => ({ ...e, data: injectComponentData(e, components) }))
@@ -18,6 +18,6 @@ export function filterEntities(
 
       const keys = Object.keys(e.data)
 
-      return deps?.every((dep) => keys.includes(dep))
+      return query?.every((dep) => keys.includes(dep))
     })
 }

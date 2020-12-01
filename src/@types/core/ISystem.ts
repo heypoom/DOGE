@@ -7,7 +7,7 @@ export interface ISystem<T extends IComponentType[] = IComponentType[]> {
   name?: string
 
   /** Which components does this system need? */
-  deps?: T
+  query?: T
 
   /** Run this system handler on setup */
   onSetup?: ISystemHandler<T>

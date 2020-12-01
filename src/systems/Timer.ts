@@ -1,7 +1,7 @@
 import { createSystem } from './utils/createSystem'
 
 export const TimerSystem = createSystem({
-  deps: ['timer'],
+  query: ['timer'],
 
   async onTick(es, w) {
     es.forEach((e) => {

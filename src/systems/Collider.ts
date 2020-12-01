@@ -3,7 +3,7 @@ import type { IEntity } from '../@types/core'
 import { createSystem } from './utils/createSystem'
 
 export const ColliderSystem = createSystem({
-  deps: ['collider', 'position'],
+  query: ['collider', 'position'],
 
   onTick(es, w) {
     es.forEach((t) => {

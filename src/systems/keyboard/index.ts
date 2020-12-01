@@ -3,7 +3,7 @@ import { movementKeymap } from './movement'
 import { createSystem } from '../utils/createSystem'
 
 export const KeyboardSystem = createSystem({
-  deps: ['keypress'],
+  query: ['keypress'],
 
   onSetup([e]) {
     const game = e.data

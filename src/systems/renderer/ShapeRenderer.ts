@@ -5,7 +5,7 @@ import { pixi } from '../../gfx'
 import { createSystem } from '../utils/createSystem'
 
 export const ShapeRendererSystem = createSystem({
-  deps: ['position', 'shape'],
+  query: ['position', 'shape'],
 
   onSetup(es, w) {
     es.forEach((entity) => {

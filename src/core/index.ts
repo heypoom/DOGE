@@ -114,15 +114,15 @@ export class World {
     systems = this.systems,
   ) {
     for (const system of systems) {
-      const { deps } = system
+      const { query } = system
 
       // Get the system lifecycle handle (onSetup, onTick, onCleanup)
       const handle = getSystemLifecycleHandle(system, lifecycle)
       if (!handle) continue
 
       // Run the system handle with the entities that uses that system.
-      const filteredEntities = deps
-        ? filterEntities(entities, deps, this.components)
+      const filteredEntities = query
+        ? filterEntities(entities, query, this.components)
         : []
 
       await handle(filteredEntities as IEntityOf[], this)

@@ -8,7 +8,7 @@ import { createSystem } from '../utils/createSystem'
 
 export const TextureRendererSystem = createSystem({
   name: 'TextureRenderer',
-  deps: ['position', 'texture'],
+  query: ['position', 'texture'],
 
   async onSetup(es) {
     for (const entity of es) {

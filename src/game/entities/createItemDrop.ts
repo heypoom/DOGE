@@ -5,10 +5,10 @@ import { getItem, IItemType } from '../items'
 import type { IPosition } from '../../@types/components/IPosition'
 import { missingItemSprite } from '../../constants/missingItemSprite'
 
-export function createItemDrop(world: World) {
+export function createItemDrop(w: World) {
   const sharedItemComponents: Partial<Record<IItemType, string[]>> = {}
 
-  const itemColliderId = world.addComponent('collider', {
+  const itemColliderId = w.addComponent('collider', {
     enabled: true,
     size: 15,
     role: 'target',
@@ -18,16 +18,13 @@ export function createItemDrop(world: World) {
   function addItemDrop(type: IItemType, position: IPosition) {
     if (!sharedItemComponents[type]) {
       sharedItemComponents[type] = [
-        world.addComponent('item', { type, quantity: 1 }),
-        world.addComponent(
-          'texture',
-          getItem(type)?.sprite ?? missingItemSprite,
-        ),
+        w.addComponent('item', { type, quantity: 1 }),
+        w.addComponent('texture', getItem(type)?.sprite ?? missingItemSprite),
       ]
     }
 
-    return world.addEntityByIds('droppedItem', [
-      world.addComponent('position', position),
+    return w.addEntityByIds('droppedItem', [
+      w.addComponent('position', position),
       itemColliderId,
       ...(sharedItemComponents[type] ?? []),
     ])

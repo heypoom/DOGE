@@ -26,10 +26,7 @@ import type {
 
 import { createComponent } from './utils/createSharedComponents'
 
-import {
-  createEntityByIds,
-  createStandaloneEntity,
-} from './utils/createEntity'
+import { createEntityByIds, createStandaloneEntity } from './utils/createEntity'
 
 import type { IComponentMap, IComponentType } from '../@types/components'
 import { injectComponentData } from './utils/injectComponentData'

@@ -15,6 +15,8 @@ import { getItem, IItemType } from './game/items'
 import type { ITexture } from './@types/components/ITexture'
 import type { IPosition } from './@types/components/IPosition'
 
+import { missingItemSprite } from './constants/missingItemSprite'
+
 export const world = new World()
 
 // @ts-ignore
@@ -46,21 +48,16 @@ world.addEntity('wall', {
   shape: { type: 'square', size: 150, color: 0xfc5c65 },
 
   collider: {
-    enabled: false,
+    enabled: true,
     role: 'target',
-    size: 150,
+    size: 100,
+    onCollision: action('@wall/interact'),
   },
 })
 
 function addItemDrop(type: IItemType, position: IPosition, quantity = 1) {
   const item = getItem(type)
   if (!item) return
-
-  const missingItemSprite: ITexture = {
-    src: '/assets/minions.png',
-    width: 60,
-    height: 90,
-  }
 
   return world.addEntity('droppedItem', {
     position,
@@ -77,8 +74,8 @@ function addItemDrop(type: IItemType, position: IPosition, quantity = 1) {
   })
 }
 
-for (let i = 0; i < 1000; i += 50) {
-  addItemDrop('lateKingPhoto', { x: i + 5, y: i })
+for (let i = 0; i < 10; i++) {
+  addItemDrop(i % 2 ? 'lateKingPhoto' : 'yellowShirt', { x: i * 60, y: i * 60 })
 }
 
 world.addEntity('game', {

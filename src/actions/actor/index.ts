@@ -3,12 +3,44 @@ import { MoveAction } from './movement'
 import type { IActionGroup } from '../../@types/core'
 import type { IActorAction, IPickupAction } from '../../@types/actions'
 
+import { action } from '../index'
 import { getItem } from '../../game/items'
+
+import { missingItemSprite } from '../../constants/missingItemSprite'
 
 export const ActorActions: IActionGroup<IActorAction, 'actor'> = {
   '@actor/move': (a, e) => MoveAction[a.direction]?.(e),
   '@actor/paint': () => {},
   '@actor/use': () => {},
+  '@actor/place': (a, e, w) => {
+    const player = e.data
+    const { inventory } = player
+
+    const inventoryItem = inventory.items.find((i) => i.type === a.item.type)
+    if (!inventoryItem) return
+
+    inventoryItem.quantity = (inventoryItem.quantity ?? 0) - 1
+
+    const item = getItem(a.item.type)
+
+    w.addEntity('droppedItem', {
+      position: player.position,
+      item: { type: a.item.type, quantity: 1 },
+
+      collider: {
+        enabled: true,
+        size: 15,
+        role: 'target',
+        onCollision: action('@actor/pickup'),
+      },
+
+      texture: item.sprite ?? missingItemSprite,
+    })
+
+    if (inventoryItem.quantity <= 0) {
+      inventory.items = inventory.items.filter((i) => i.type !== a.item.type)
+    }
+  },
   '@effect/apply': () => {},
 }
 

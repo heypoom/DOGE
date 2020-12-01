@@ -1,3 +1,3 @@
 export interface IWallAction {
-  '@wall/speedboost': null
+  '@wall/interact': null
 }

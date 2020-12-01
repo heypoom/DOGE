@@ -27,6 +27,11 @@ export const KeyboardSystem = createSystem({
       // Handles movement keys (wasd, arrow keys)
       const direction = movementKeymap[key]
       if (direction) return w.act('@actor/move', { direction }, player)
+
+      const { inventory } = player.data
+      const firstItem = inventory.items?.[0]
+
+      if (key === 'v') return w.act('@actor/place', { item: firstItem }, player)
     })
   },
 })

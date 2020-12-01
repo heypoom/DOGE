@@ -4,7 +4,7 @@ import type { IPlayer } from './IPlayer'
 import type { IActor } from './IActor'
 import type { IDroppedItem } from './IDroppedItem'
 
-import type { IComponentType, PickComponents } from '../components'
+import type { IComponentType, WithComponent } from '../components'
 
 import type { IEntity } from '../core'
 
@@ -18,10 +18,12 @@ export interface IEntityMap {
 
 export type IEntityType = keyof IEntityMap
 
-export type IEntityOf<T extends IComponentType[] = IComponentType[]> = IEntity<
+export type IEntityOf<T extends IComponentType = IComponentType> = IEntity<
   IEntityType,
-  PickComponents<T>
+  WithComponent<T>
 >
+
+type entity = IEntityOf<'shape' | 'texture'> 
 
 export type IEntityDataOf<T extends keyof IEntityMap> = IEntityMap[T]
 

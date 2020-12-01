@@ -8,6 +8,7 @@ import type {
 export interface IActorAction {
   '@actor/paint': { team: ITeam; color: string }
   '@actor/move': { direction: IDirection }
+  '@actor/place': { item: IItem }
   '@actor/use': { item: IItem }
 
   '@effect/apply': { effect: IEffect }

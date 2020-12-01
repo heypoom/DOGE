@@ -1,4 +1,4 @@
-import { Graphics } from 'pixi.js'
+import { Graphics, Rectangle } from 'pixi.js'
 
 import { pixi } from '../../gfx'
 
@@ -36,11 +36,18 @@ export const ShapeRendererSystem = createSystem({
       const { x, y } = position
       const { color, size } = shape
 
-      const object = pixi.stage.getChildByName(entity.id)
+      const object = (pixi.stage.getChildByName(
+        entity.id,
+      ) as unknown) as Graphics
+
       if (!object) return
 
       object.x = x
       object.y = y
+
+      object.beginFill(color)
+      object.drawRect(x, y, size, size)
+      object.endFill()
     })
   },
 })

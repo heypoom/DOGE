@@ -42,7 +42,7 @@ world.addEntity('player', {
   },
 })
 
-world.addSharedEntity('wall', {
+world.addEntity('wall', {
   position: { x: 200, y: 50 },
   shape: { type: 'square', size: 150, color: 0xfc5c65 },
 
@@ -71,7 +71,7 @@ function addItemDrop(type: IItemType, position: IPosition) {
     ]
   }
 
-  return world.addEntityByComponents('droppedItem', [
+  return world.addEntityByIds('droppedItem', [
     world.addComponent('position', position),
     itemColliderId,
     ...(sharedItemComponents[type] ?? []),
@@ -79,7 +79,7 @@ function addItemDrop(type: IItemType, position: IPosition) {
 }
 
 for (let i = 0; i < 10; i++) {
-  addItemDrop(i % 2 ? 'lateKingPhoto' : 'yellowShirt', { x: i * 60, y: i * 60 })
+  addItemDrop(i % 2 ? 'StunGun' : 'DogeCoin', { x: i * 60, y: i * 60 })
 }
 
 world.addEntity('game', {

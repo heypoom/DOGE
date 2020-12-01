@@ -15,7 +15,6 @@ import type { ISystemLifecycle } from '../@types/core'
 import { getSystemLifecycleHandle } from './utils/getSystemLifecycleHandle'
 
 // Entities
-import { createEntity } from './utils/createEntity'
 import { filterEntities } from './utils/filterEntities'
 
 import type {
@@ -26,10 +25,11 @@ import type {
 } from '../@types/entities'
 
 import { createComponent } from './utils/createSharedComponents'
+
 import {
-  createEntityWithComponentIds,
-  createEntityWithSharedComponents,
-} from './utils/createEntityWithSharedComponent'
+  createEntityByIds,
+  createStandaloneEntity,
+} from './utils/createEntity'
 
 import type { IComponentMap, IComponentType } from '../@types/components'
 import { injectComponentData } from './utils/injectComponentData'
@@ -62,31 +62,21 @@ export class World {
     } as InjectedEntity<T>
   }
 
+  addEntityByIds<T extends IEntityType>(
+    type: T,
+    componentIds: string[],
+  ): IEntity<T> {
+    const entity = createEntityByIds(type, componentIds)
+    this.entities.push(entity)
+
+    return entity
+  }
+
   addEntity<T extends IEntityType>(
     type: T,
     data: IEntityDataOf<T>,
   ): IEntity<T> {
-    const entity = createEntity(type, data)
-    this.entities.push(entity)
-
-    return entity
-  }
-
-  addEntityByComponents<T extends IEntityType>(
-    type: T,
-    componentIds: string[],
-  ): IEntity<T> {
-    const entity = createEntityWithComponentIds(type, componentIds)
-    this.entities.push(entity)
-
-    return entity
-  }
-
-  addSharedEntity<T extends IEntityType>(
-    type: T,
-    data: IEntityDataOf<T>,
-  ): IEntity<T> {
-    const [entity, components] = createEntityWithSharedComponents(type, data)
+    const [entity, components] = createStandaloneEntity(type, data)
 
     components.forEach(([id, block]) => {
       this.components[id] = block

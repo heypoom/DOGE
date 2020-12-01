@@ -1,19 +1,19 @@
 import type { IItemBlueprint as Item } from '../../@types'
 
-const yellowShirt: Item = {
-  name: 'Yellow Shirt 👕',
+const DogeCoin: Item = {
+  name: 'Doge Coin 🪙 🐩',
   lore: 'ใส่แล้วจะเป็นคนดีขึ้นมาทันที!',
   description: `10-second Immunity effect to blend in and re-position. They'll notice immediately if you use a colorful paint, though!`,
 
   sprite: {
     width: 60,
     height: 90,
-    src: '/assets/yellowshirt.png',
+    src: '/assets/yellowShirt.png',
   },
 }
 
-const lateKingPhoto: Item = {
-  name: "มิตรสหายท่านหนึ่ง's Photo",
+const StunGun: Item = {
+  name: 'Stun Gun 🔫',
   lore: '',
   description: `Surrounding minions in 9-block radius will cry for 9 seconds.`,
 
@@ -24,16 +24,11 @@ const lateKingPhoto: Item = {
   },
 }
 
-const orangeJuice: Item = {
-  name: 'Orange Juice',
+const OrangeJuice: Item = {
+  name: 'Orange Juice 🍊',
 }
 
-const container: Item = {
-  name: 'ตู้คอนเทนเนอร์',
-  description: '',
-}
-
-export const ItemRegistry = { yellowShirt, lateKingPhoto, orangeJuice } as const
+export const ItemRegistry = { DogeCoin, StunGun, OrangeJuice } as const
 
 export type IItemType = keyof typeof ItemRegistry
 

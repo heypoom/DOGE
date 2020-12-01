@@ -5,7 +5,11 @@ import { RootActions } from '../actions'
 import type { IActionType, IRootActionMap } from '../@types/actions'
 
 // Systems
-import type { ISharedComponentMap, ISystem } from '../@types/core'
+import type {
+  InjectedEntity,
+  ISharedComponentMap,
+  ISystem,
+} from '../@types/core'
 import type { ISystemLifecycle } from '../@types/core'
 
 import { getSystemLifecycleHandle } from './utils/getSystemLifecycleHandle'
@@ -28,6 +32,7 @@ import {
 } from './utils/createEntityWithSharedComponent'
 
 import type { IComponentMap, IComponentType } from '../@types/components'
+import { injectComponentData } from './utils/injectComponentData'
 
 export class World {
   entities: IEntity[] = []
@@ -47,8 +52,14 @@ export class World {
     return this.entities.filter((e) => e.type === type) as IEntity<T>[]
   }
 
-  get<T extends IEntityType>(type: T): IEntity<T> {
-    return this.entities.find((e) => e.type === type) as IEntity<T>
+  get<T extends IEntityType>(type: T): InjectedEntity<T> | null {
+    const entity = this.entities.find((e) => e.type === type)
+    if (!entity) return null
+
+    return {
+      ...entity,
+      data: injectComponentData(entity, this.components),
+    } as InjectedEntity<T>
   }
 
   addEntity<T extends IEntityType>(

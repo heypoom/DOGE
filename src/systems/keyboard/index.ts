@@ -19,7 +19,7 @@ export const KeyboardSystem = createSystem({
 
   async onTick([e], w) {
     const { keypress } = e.data
-    const player = w.get('player')
+    const player = w.get('player')!
 
     Object.entries(keypress).forEach(([key, state]) => {
       if (!state) return

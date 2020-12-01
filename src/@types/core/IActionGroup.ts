@@ -1,11 +1,11 @@
-import type { IEntity } from './IEntity'
+import type { IEntity, InjectedEntity } from './IEntity'
 
 import type { World } from '../../core'
 import type { IEntityType } from '../../@types/entities'
 
 export type IActionHandler<Data, E extends IEntityType> = (
   data: Data,
-  entity: IEntity<E>,
+  entity: InjectedEntity<E>,
   world: World,
 ) => void
 

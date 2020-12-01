@@ -12,7 +12,7 @@ export const ColliderSystem = createSystem({
 
       if (!enabled || role !== 'target') return
 
-      const player = w.get('player').data
+      const player = w.get('player')!.data
       if (!player) return
 
       const { x, y } = player.position

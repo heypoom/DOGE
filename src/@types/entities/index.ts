@@ -6,7 +6,7 @@ import type { IDroppedItem } from './IDroppedItem'
 
 import type { IComponentType, WithComponent } from '../components'
 
-import type { IEntity } from '../core'
+import type { InjectedEntity } from '../core'
 
 export interface IEntityMap {
   player: IPlayer
@@ -18,10 +18,9 @@ export interface IEntityMap {
 
 export type IEntityType = keyof IEntityMap
 
-export type IEntityOf<T extends IComponentType = IComponentType> = IEntity<
-  IEntityType,
-  WithComponent<T>
->
+export type IEntityOf<
+  T extends IComponentType = IComponentType
+> = InjectedEntity<IEntityType, WithComponent<T>>
 
 export type IEntityDataOf<T extends keyof IEntityMap> = IEntityMap[T]
 

@@ -48,7 +48,7 @@ export const ActorPickupAction: IActionGroup<IPickupAction, 'droppedItem'> = {
   '@actor/pickup': (a, e, w) => {
     const { item } = e.data
 
-    const { inventory } = w.get('player').data
+    const { inventory } = w.get('player')!.data
 
     const targetItem = inventory.items.find((i) => i.type === item.type)
 

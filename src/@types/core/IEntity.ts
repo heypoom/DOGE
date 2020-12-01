@@ -1,12 +1,15 @@
 import type { IEntityDataOf, IEntityType } from '../../@types/entities'
 
-export interface IEntity<
-  Type extends IEntityType = IEntityType,
-  Data = IEntityDataOf<Type>
-> {
+export interface IEntity<Type extends IEntityType = IEntityType> {
   id: string
   type: Type
 
-  data?: Data
   componentIds?: string[]
+}
+
+export type InjectedEntity<
+  T extends IEntityType = IEntityType,
+  Data = IEntityDataOf<T>
+> = IEntity<T> & {
+  data: Data
 }

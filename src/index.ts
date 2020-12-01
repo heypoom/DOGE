@@ -19,7 +19,7 @@ import { missingItemSprite } from './constants/missingItemSprite'
 export const world = new World()
 
 // @ts-ignore
-window.world = world
+window.w = world
 
 world.addEntity('player', {
   position: { x: 100, y: 100 },

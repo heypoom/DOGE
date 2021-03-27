@@ -1,7 +1,12 @@
 import type { IEntityOf } from '../../@types/entities'
 import type { IComponentType } from '../../@types/components'
 
-import type { IEntity, ISharedComponentMap } from '../../@types/core'
+import type {
+  IEntity,
+  InjectedEntity,
+  ISharedComponentMap,
+} from '../../@types/core'
+
 import { injectComponentData } from './injectComponentData'
 
 export function filterEntities(
@@ -11,13 +16,16 @@ export function filterEntities(
 ) {
   if (query.length === 0) return entities as IEntityOf[]
 
-  return entities
-    .map((e) => ({ ...e, data: injectComponentData(e, components) }))
-    .filter((e) => {
-      if (!e.data) return false
+  const injectedEntities: InjectedEntity[] = entities.map((e) => ({
+    ...e,
+    data: injectComponentData(e, components),
+  }))
 
-      const keys = Object.keys(e.data)
+  return injectedEntities.filter((e) => {
+    if (!e.data) return false
 
-      return query?.every((dep) => keys.includes(dep))
-    })
+    const keys = Object.keys(e.data)
+
+    return query?.every((dep) => keys.includes(dep))
+  })
 }

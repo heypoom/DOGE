@@ -10,6 +10,7 @@ import type {
   ISharedComponentMap,
   ISystem,
 } from '../@types/core'
+
 import type { ISystemLifecycle } from '../@types/core'
 
 import { getSystemLifecycleHandle } from './utils/getSystemLifecycleHandle'
@@ -37,10 +38,12 @@ export class World {
 
   components: ISharedComponentMap = {}
 
+  /** Run all onSetup handler in the system. */
   setup() {
     this.run('setup').then()
   }
 
+  /** Run all onTick handler in the system. */
   tick(delta: number) {
     this.run('tick').then()
   }
@@ -49,6 +52,7 @@ export class World {
     return this.entities.filter((e) => e.type === type) as IEntity<T>[]
   }
 
+  /** Get the entity instance, and inject the data! */
   get<T extends IEntityType>(type: T): InjectedEntity<T> | null {
     const entity = this.entities.find((e) => e.type === type)
     if (!entity) return null
@@ -59,6 +63,7 @@ export class World {
     } as InjectedEntity<T>
   }
 
+  /** Insert the entity. */
   addEntityByIds<T extends IEntityType>(
     type: T,
     componentIds: string[],
@@ -138,6 +143,7 @@ export class World {
     if (action) action(data as never, entity as never, this)
   }
 
+  /** Starts the game loop. */
   start() {
     this.setup()
 

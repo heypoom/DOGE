@@ -1,3 +1,5 @@
+// @seq: 6
+
 import type { IWall } from './IWall'
 import type { IGame } from './IGame'
 import type { IPlayer } from './IPlayer'
@@ -8,6 +10,7 @@ import type { IComponentType, WithComponent } from '../components'
 
 import type { InjectedEntity } from '../core'
 
+/** Create a mapping between entity name and the components it may link to. */
 export interface IEntityMap {
   player: IPlayer
   wall: IWall
@@ -16,6 +19,7 @@ export interface IEntityMap {
   droppedItem: IDroppedItem
 }
 
+/** Which entities can we spawn? */
 export type IEntityType = keyof IEntityMap
 
 export type IEntityOf<

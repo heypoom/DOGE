@@ -1,3 +1,5 @@
+// @seq: 3
+
 import { action } from '../../actions'
 import type { World } from '../../core'
 

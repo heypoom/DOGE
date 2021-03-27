@@ -2,8 +2,8 @@ import type { IItemBlueprint as Item } from '../../@types'
 
 const DogeCoin: Item = {
   name: 'Doge Coin 🪙 🐩',
-  lore: 'ใส่แล้วจะเป็นคนดีขึ้นมาทันที!',
-  description: `10-second Immunity effect to blend in and re-position. They'll notice immediately if you use a colorful paint, though!`,
+  lore: '+500% Valuation!',
+  description: `10-second Immunity effect to re-position.`,
 
   sprite: {
     width: 60,
@@ -14,7 +14,7 @@ const DogeCoin: Item = {
 
 const StunGun: Item = {
   name: 'Stun Gun 🔫',
-  lore: '',
+  lore: 'Zzzzzzzzzzz',
   description: `Surrounding minions in 9-block radius will cry for 9 seconds.`,
 
   sprite: {

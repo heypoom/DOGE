@@ -1,5 +1,8 @@
+// @seq: 2
+
 import type { World } from '../../core'
 
+/** Spawns the player entity with these data. */
 export function spawnPlayer(world: World) {
   world.addEntity('player', {
     position: { x: 100, y: 100 },

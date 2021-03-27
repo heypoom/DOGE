@@ -1,3 +1,5 @@
+// @seq: 6
+
 import type { IEntity } from '../@types/core'
 
 import { createSystem } from './utils/createSystem'

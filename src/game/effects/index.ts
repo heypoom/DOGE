@@ -6,7 +6,7 @@ const immunity: Effect = { name: 'Immunity' }
 
 const gratefulTears: Effect = {
   name: 'Grateful Tears',
-  description: 'ซาบซุ้งมากๆ',
+  description: '',
 
   mode: 'AreaOfEffect',
   target: 'enemy',

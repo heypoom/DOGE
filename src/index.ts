@@ -1,3 +1,5 @@
+// @seq: 1
+
 import { pixi } from './gfx'
 import { World } from './core'
 

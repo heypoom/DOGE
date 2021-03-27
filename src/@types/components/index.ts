@@ -10,6 +10,7 @@ import type { IItemInstance as Item } from '../IItem'
 import type { IHealth } from './IHealth'
 import type { IBattleStat } from './IBattleStat'
 
+/** Do the same thing with components. */
 export interface IComponentMap {
   position: IPosition
   movement: IMovement
